@@ -86,3 +86,5 @@ lint/tmp/
 /.idea/
 /gradlew
 /gradlew.bat
+app/src/main/java/com/robertlevonyan/composable/newsapp/ui/theme/.DS_Store
+app/src/main/res/font/.DS_Store
