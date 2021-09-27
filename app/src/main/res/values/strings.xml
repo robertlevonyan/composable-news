@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Composable News</string>
+    <string name="label_breaking">Breaking</string>
+    <string name="label_popular">Popular</string>
 </resources>

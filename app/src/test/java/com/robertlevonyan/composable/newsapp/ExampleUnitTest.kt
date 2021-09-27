@@ -1,4 +1,4 @@
-package com.robertlevonyan.app
+package com.robertlevonyan.composable.newsapp
 
 import org.junit.Test
 
