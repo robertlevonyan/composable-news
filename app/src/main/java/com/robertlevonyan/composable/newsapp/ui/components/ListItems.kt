@@ -3,6 +3,7 @@ package com.robertlevonyan.composable.newsapp.ui.components
 import android.content.res.Resources
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
@@ -25,8 +26,13 @@ import com.robertlevonyan.composable.newsapp.ui.theme.*
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
-fun BreakingNewsItem(newsItem: NewsItem) {
-    ConstraintLayout {
+fun BreakingNewsItem(
+    newsItem: NewsItem,
+    onNewsItemClick: (NewsItem) -> Unit,
+) {
+    ConstraintLayout(
+        modifier = Modifier.clickable { onNewsItemClick.invoke(newsItem) }
+    ) {
         val (background, title, description) = createRefs()
 
         val painter = if (newsItem.image == null) {

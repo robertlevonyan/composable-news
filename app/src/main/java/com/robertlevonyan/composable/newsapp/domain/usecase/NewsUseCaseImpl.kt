@@ -31,6 +31,14 @@ class NewsUseCaseImpl @Inject constructor(private val newsRepository: NewsReposi
         ).articles
     }
 
+    override suspend fun getSingleNews(title: String): NewsItem? = withContext(Dispatchers.IO) {
+        newsRepository.getNews(
+            query = title,
+            limit = 1,
+            offset = 0
+        ).articles.firstOrNull()
+    }
+
     override suspend fun getSources(): List<SourceItem> = withContext(Dispatchers.IO) {
         newsRepository.getSources().sources
     }

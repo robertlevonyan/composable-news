@@ -15,7 +15,9 @@ import androidx.constraintlayout.compose.Dimension
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
+import com.google.accompanist.insets.navigationBarsPadding
 import com.robertlevonyan.composable.newsapp.R
+import com.robertlevonyan.composable.newsapp.data.entity.weather.Weather
 import com.robertlevonyan.composable.newsapp.ui.components.SectionHeadingText
 import com.robertlevonyan.composable.newsapp.ui.screens.main.MainViewModel
 import com.robertlevonyan.composable.newsapp.ui.theme.*
@@ -26,12 +28,14 @@ object Weather {
     @Composable
     fun WeatherSection(mainViewModel: MainViewModel) {
         val weather by mainViewModel.weather.collectAsState()
-        if (weather.name.isEmpty()) return
+
+        if (weather == Weather.EMPTY) return
 
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
+                .navigationBarsPadding()
         ) {
 
             val (header, city, date, description, temperature, feels, min, max) = createRefs()

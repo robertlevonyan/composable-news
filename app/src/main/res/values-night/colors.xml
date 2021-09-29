@@ -2,6 +2,7 @@
 <resources>
     <color name="primary">#FF1A1A1A</color>
     <color name="primaryVariant">#FF000000</color>
+    <color name="primaryVariantTransparent">#40000000</color>
     <color name="onPrimary">#FFF1F1F1</color>
     <color name="onPrimaryVariant">#FFECECEC</color>
     <color name="secondary">#FFE7A942</color>

@@ -12,6 +12,8 @@ interface NewsUseCase {
 
     suspend fun getPopularNews(category: Category): List<NewsItem>
 
+    suspend fun getSingleNews(title: String): NewsItem?
+
     suspend fun getSources(): List<SourceItem>
 
     suspend fun getInitialSources(): List<SourceItem>

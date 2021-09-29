@@ -7,6 +7,7 @@ import com.robertlevonyan.composable.newsapp.data.entity.weather.WeatherResponse
 interface NewsRepository {
     suspend fun getNews(
         category: String = "",
+        query: String = "",
         limit: Int,
         offset: Int,
     ): NewsResponse

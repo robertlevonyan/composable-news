@@ -13,6 +13,7 @@ class NewsRepositoryImpl @Inject constructor(
 ) : NewsRepository {
     override suspend fun getNews(
         category: String,
+        query: String,
         limit: Int,
         offset: Int,
     ): NewsResponse = apiService.get(
@@ -25,6 +26,9 @@ class NewsRepositoryImpl @Inject constructor(
         ).apply {
             if (category.isNotEmpty()) {
                 put("category", category)
+            }
+            if (query.isNotEmpty()) {
+                put("q", query)
             }
         },
     )

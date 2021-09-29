@@ -23,9 +23,7 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(navController: NavController) {
-    val alpha = remember {
-        Animatable(0.1f)
-    }
+    val alpha = remember { Animatable(0.1f) }
 
     LaunchedEffect(key1 = true) {
         alpha.animateTo(

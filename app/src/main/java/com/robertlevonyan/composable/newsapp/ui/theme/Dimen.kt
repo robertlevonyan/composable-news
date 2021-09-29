@@ -18,6 +18,7 @@ val SectionSize = 250.dp
 val IconSize = 24.dp
 val SplashIconSize = 120.dp
 val WeatherIconSize = 72.dp
+val SmallFabSize = 36.dp
 
 val SectionHeadingTextSize = 24.sp
 val ItemHeadingTextSize = 23.sp

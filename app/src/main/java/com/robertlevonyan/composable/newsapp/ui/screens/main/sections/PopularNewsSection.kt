@@ -11,6 +11,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavController
 import com.robertlevonyan.composable.newsapp.R
 import com.robertlevonyan.composable.newsapp.data.entity.Category
 import com.robertlevonyan.composable.newsapp.ui.components.Category
@@ -24,7 +25,7 @@ import com.robertlevonyan.composable.newsapp.ui.theme.SmallPadding
 
 object PopularNews {
     @Composable
-    fun PopularNewsSection(mainViewModel: MainViewModel) {
+    fun PopularNewsSection(navController: NavController, mainViewModel: MainViewModel) {
         SectionHeadingText(text = stringResource(id = R.string.label_popular))
 
         val categories by mainViewModel.categories.collectAsState()

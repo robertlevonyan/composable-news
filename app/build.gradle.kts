@@ -5,6 +5,7 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -84,17 +85,18 @@ dependencies {
     implementation("io.ktor:ktor-client-android:1.6.3")
     implementation("io.ktor:ktor-client-gson:1.6.3")
 
-    implementation("com.google.accompanist:accompanist-pager:0.18.0")
     implementation("com.google.accompanist:accompanist-flowlayout:0.18.0")
+    implementation("com.google.accompanist:accompanist-insets:0.18.0")
+    implementation("com.google.accompanist:accompanist-pager:0.18.0")
     implementation("com.google.android.material:material:1.4.0")
     implementation("com.google.dagger:hilt-android:2.38.1")
-    implementation("androidx.hilt:hilt-navigation-compose:1.0.0-alpha03")
     kapt("com.google.dagger:hilt-android-compiler:2.38.1")
 
     implementation("androidx.activity:activity-compose:1.4.0-alpha02")
     implementation("androidx.appcompat:appcompat:1.3.1")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.0-beta02")
     implementation("androidx.core:core-ktx:1.6.0")
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0-alpha03")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
     implementation("androidx.navigation:navigation-compose:2.4.0-alpha09")
 

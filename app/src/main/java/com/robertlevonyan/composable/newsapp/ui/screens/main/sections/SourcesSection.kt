@@ -21,6 +21,7 @@ import androidx.constraintlayout.compose.ConstrainedLayoutReference
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintLayoutScope
 import androidx.constraintlayout.compose.Dimension
+import androidx.navigation.NavController
 import com.google.accompanist.flowlayout.FlowRow
 import com.robertlevonyan.chip.compose.MaterialChip
 import com.robertlevonyan.composable.newsapp.R
@@ -31,7 +32,7 @@ import com.robertlevonyan.composable.newsapp.ui.theme.*
 
 object Sources {
     @Composable
-    fun SourcesSection(mainViewModel: MainViewModel) {
+    fun SourcesSection(navController: NavController, mainViewModel: MainViewModel) {
         val sources by mainViewModel.sources.collectAsState()
         val areSourcesLoading by mainViewModel.areSourcesLoading.collectAsState()
 

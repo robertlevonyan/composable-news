@@ -1,7 +1,10 @@
 package com.robertlevonyan.composable.newsapp.data.entity
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class NewsItem(
     @SerializedName("author")
     val author: String?,
@@ -19,14 +22,15 @@ data class NewsItem(
     val source: NewsSource,
     @SerializedName("published_at")
     val publishedAt: String,
-)
+) : Parcelable
 
+@Parcelize
 data class NewsSource(
     @SerializedName("id")
     val id: String,
     @SerializedName("name")
     val name: String,
-)
+) : Parcelable
 
 data class NewsResponse(
     @SerializedName("status")
