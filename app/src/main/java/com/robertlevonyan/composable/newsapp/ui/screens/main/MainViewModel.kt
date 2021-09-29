@@ -4,11 +4,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.robertlevonyan.composable.newsapp.data.entity.Category
 import com.robertlevonyan.composable.newsapp.data.entity.NewsItem
+import com.robertlevonyan.composable.newsapp.data.entity.SourceItem
+import com.robertlevonyan.composable.newsapp.data.entity.weather.Weather
 import com.robertlevonyan.composable.newsapp.domain.usecase.NewsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,6 +22,22 @@ class MainViewModel @Inject constructor(private val newsUseCase: NewsUseCase) : 
 
     private val _popularNews = MutableStateFlow(emptyList<NewsItem>())
     val popularNews: StateFlow<List<NewsItem>> get() = _popularNews
+
+    private val _sources = MutableStateFlow(emptyList<SourceItem>())
+    val sources: StateFlow<List<SourceItem>> get() = _sources
+
+    private val _areSourcesLoading = MutableStateFlow(false)
+    val areSourcesLoading: StateFlow<Boolean> get() = _areSourcesLoading
+
+    private val _areAllSources = MutableStateFlow(false)
+    val areAllSources: StateFlow<Boolean> get() = _areAllSources
+
+    private val _weather = newsUseCase.getWeather().stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Eagerly,
+        initialValue = Weather.EMPTY,
+    )
+    val weather: StateFlow<Weather> get() = _weather
 
     private val _categories = MutableStateFlow(
         listOf(
@@ -33,7 +52,14 @@ class MainViewModel @Inject constructor(private val newsUseCase: NewsUseCase) : 
     )
     val categories: StateFlow<List<Category>> get() = _categories
 
-    fun getBreakingNews() {
+    init {
+        getBreakingNews()
+        selectFirstCategory()
+        getInitialSources()
+//        getWeather()
+    }
+
+    private fun getBreakingNews() {
         viewModelScope.launch {
             _breakingNews.value = newsUseCase.getBreakingNews()
         }
@@ -61,7 +87,33 @@ class MainViewModel @Inject constructor(private val newsUseCase: NewsUseCase) : 
         }
     }
 
-    fun selectFirstCategory() {
+    private fun selectFirstCategory() {
         updateCategories(categories.value.first())
     }
+
+    fun getSources() {
+        viewModelScope.launch {
+            _areSourcesLoading.value = true
+            _sources.value = newsUseCase.getSources()
+            _areAllSources.value = true
+            _areSourcesLoading.value = false
+        }
+    }
+
+    fun getInitialSources() {
+        viewModelScope.launch {
+            _areSourcesLoading.value = true
+            _sources.value = newsUseCase.getInitialSources()
+            _areAllSources.value = false
+            _areSourcesLoading.value = false
+        }
+    }
+
+//    private fun getWeather() {
+//        viewModelScope.launch {
+//            newsUseCase.getWeather().collect {
+//                _weather.value = it
+//            }
+//        }
+//    }
 }

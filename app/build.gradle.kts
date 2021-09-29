@@ -28,11 +28,14 @@ android {
             val localProperties = Properties()
             localProperties.load(project.rootProject.file("local.properties").inputStream())
 
-            val apiKey = localProperties.getProperty("API_KEY")
-            buildConfigField("String", "API_KEY", apiKey)
+            val newsKey = localProperties.getProperty("NEWS_KEY")
+            buildConfigField("String", "NEWS_KEY", newsKey)
+
+            val weatherKey = localProperties.getProperty("WEATHER_KEY")
+            buildConfigField("String", "WEATHER_KEY", weatherKey)
         }
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -41,8 +44,11 @@ android {
             val localProperties = Properties()
             localProperties.load(project.rootProject.file("local.properties").inputStream())
 
-            val apiKey = localProperties.getProperty("API_KEY")
-            buildConfigField("String", "API_KEY", apiKey)
+            val newsKey = localProperties.getProperty("NEWS_KEY")
+            buildConfigField("String", "NEWS_KEY", newsKey)
+
+            val weatherKey = localProperties.getProperty("WEATHER_KEY")
+            buildConfigField("String", "WEATHER_KEY", weatherKey)
         }
     }
     compileOptions {
@@ -78,7 +84,8 @@ dependencies {
     implementation("io.ktor:ktor-client-android:1.6.3")
     implementation("io.ktor:ktor-client-gson:1.6.3")
 
-    implementation("com.google.accompanist:accompanist-pager:0.12.0")
+    implementation("com.google.accompanist:accompanist-pager:0.18.0")
+    implementation("com.google.accompanist:accompanist-flowlayout:0.18.0")
     implementation("com.google.android.material:material:1.4.0")
     implementation("com.google.dagger:hilt-android:2.38.1")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0-alpha03")
@@ -98,6 +105,7 @@ dependencies {
 
     implementation("io.coil-kt:coil-compose:1.3.2")
 
+    implementation("com.airbnb.android:lottie-compose:4.1.0")
     implementation("com.robertlevonyan.compose:materialchip:3.0.0-beta06")
 
     testImplementation("junit:junit:4.13.2")

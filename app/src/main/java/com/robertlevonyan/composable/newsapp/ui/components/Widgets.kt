@@ -23,15 +23,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.robertlevonyan.composable.newsapp.R
 import com.robertlevonyan.composable.newsapp.data.entity.Category
 import com.robertlevonyan.composable.newsapp.ui.theme.*
 
 
 @Composable
-fun SectionHeadingText(text: String) {
+fun SectionHeadingText(
+    text: String,
+    modifier: Modifier = Modifier,
+) {
     val textColor = if (isSystemInDarkTheme()) {
         WhitePure
     } else {
@@ -40,12 +41,12 @@ fun SectionHeadingText(text: String) {
 
     Text(
         text = text,
+        modifier = modifier.padding(FabPadding),
         fontFamily = FontFamily(Font(resId = R.font.newsreader_extra_bold)),
         color = textColor,
-        fontSize = 24.sp,
+        fontSize = SectionHeadingTextSize,
         overflow = TextOverflow.Ellipsis,
         maxLines = 1,
-        modifier = Modifier.padding(16.dp)
     )
 }
 
@@ -59,10 +60,10 @@ fun ItemHeadingText(
         text = text,
         fontFamily = FontFamily(Font(resId = R.font.newsreader_bold)),
         color = textColor,
-        fontSize = 23.sp,
+        fontSize = ItemHeadingTextSize,
         overflow = TextOverflow.Ellipsis,
         maxLines = 2,
-        modifier = modifier.padding(8.dp),
+        modifier = modifier.padding(all = HalfPadding),
         style = MaterialTheme.typography.h3.copy(
             shadow = Shadow(
                 color = BlackVariant,
@@ -84,14 +85,14 @@ fun GeneralText(
         text = text,
         fontFamily = FontFamily(Font(resId = R.font.newsreader_light)),
         color = textColor,
-        fontSize = 14.sp,
-        modifier = modifier.padding(8.dp),
-        lineHeight = 18.sp,
+        fontSize = GeneralTextSize,
+        modifier = modifier.padding(all = HalfPadding),
+        lineHeight = GeneralTextLineHeight,
         style = MaterialTheme.typography.h6.copy(
             shadow = Shadow(
                 color = BlackVariant,
                 offset = Offset(1f, 1f),
-                blurRadius = 5f
+                blurRadius = 5f,
             )
         ),
         maxLines = maxLines,
@@ -105,7 +106,7 @@ fun Category(
     selected: Boolean = false,
     onCategorySelected: (Category) -> Unit = {},
 ) {
-    val shape = RoundedCornerShape(16.dp)
+    val shape = RoundedCornerShape(FabPadding)
     val backgroundColor = if (selected) Accent else Color.Transparent
     val textColor = if (selected) Black else colorResource(id = R.color.onSecondary)
 
@@ -116,8 +117,8 @@ fun Category(
     ) {
         Box(modifier = Modifier
             .background(color = backgroundColor, shape = shape)
-            .border(width = 1.dp, color = Accent, shape = shape)
-            .height(32.dp)
+            .border(width = StrokeSize, color = Accent, shape = shape)
+            .height(height = ChipSize)
             .toggleable(
                 value = selected,
             ) { onCategorySelected(Category(name = text.lowercase(), selected = selected)) })
@@ -128,7 +129,7 @@ fun Category(
                     .wrapContentHeight()
                     .wrapContentWidth()
                     .align(Alignment.Center)
-                    .padding(horizontal = 8.dp),
+                    .padding(horizontal = HalfPadding),
                 textAlign = TextAlign.Center,
                 color = textColor,
                 fontFamily = FontFamily(Font(resId = R.font.newsreader_regular)),
@@ -155,16 +156,16 @@ fun ShowLoading(sectionHeight: Dp) {
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewWidgets() {
+fun <I> PreviewWidgets(items: List<I>) {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
     ) {
 //        GeneralText(text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
-        Category(
-            text = "Lorem ipsum",
-            selected = true,
-        )
+//        Category(
+//            text = "Lorem ipsum",
+//            selected = true,
+//        )
     }
 }

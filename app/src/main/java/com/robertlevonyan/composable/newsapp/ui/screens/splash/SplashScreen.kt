@@ -7,8 +7,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -16,10 +15,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.robertlevonyan.composable.newsapp.R
 import com.robertlevonyan.composable.newsapp.ui.navigation.NavigationScreens
+import com.robertlevonyan.composable.newsapp.ui.theme.SplashIconSize
 import kotlinx.coroutines.delay
 
 @Composable
@@ -38,7 +37,7 @@ fun SplashScreen(navController: NavController) {
                 }
             ),
         )
-        delay(2000)
+        delay(1000)
         navController.navigate(NavigationScreens.MainScreen.name) {
             launchSingleTop = true
             popUpTo(navController.graph.id) { inclusive = true }
@@ -52,9 +51,7 @@ fun SplashScreen(navController: NavController) {
     ) {
         Image(
             painter = painterResource(id = R.drawable.ic_icon),
-            modifier = Modifier
-                .height(120.dp)
-                .width(120.dp),
+            modifier = Modifier.size(SplashIconSize),
             contentDescription = "Logo",
         )
     }

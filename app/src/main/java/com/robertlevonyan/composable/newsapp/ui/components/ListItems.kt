@@ -14,7 +14,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import coil.annotation.ExperimentalCoilApi
@@ -51,7 +50,10 @@ fun BreakingNewsItem(newsItem: NewsItem) {
                 },
             contentDescription = null,
             contentScale = ContentScale.Crop,
-            colorFilter = ColorFilter.tint(BlackTransparent, BlendMode.Overlay)
+            colorFilter = ColorFilter.tint(
+                color = BlackTransparent,
+                blendMode = BlendMode.Overlay,
+            ),
         )
         ItemHeadingText(
             text = newsItem.title ?: "",
@@ -92,9 +94,9 @@ fun PopularNewsItem(newsItem: NewsItem) {
 
     ConstraintLayout(
         modifier = Modifier
-            .padding(all = 4.dp)
+            .padding(all = SmallPadding)
             .width(width = elementWidthDp)
-            .height(height = 250.dp),
+            .height(height = SectionSize),
     ) {
         val (image, title, description) = createRefs()
 

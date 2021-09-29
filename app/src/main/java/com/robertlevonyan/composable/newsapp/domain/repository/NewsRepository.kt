@@ -1,6 +1,8 @@
 package com.robertlevonyan.composable.newsapp.domain.repository
 
 import com.robertlevonyan.composable.newsapp.data.entity.NewsResponse
+import com.robertlevonyan.composable.newsapp.data.entity.SourceResponse
+import com.robertlevonyan.composable.newsapp.data.entity.weather.WeatherResponse
 
 interface NewsRepository {
     suspend fun getNews(
@@ -8,4 +10,8 @@ interface NewsRepository {
         limit: Int,
         offset: Int,
     ): NewsResponse
+
+    suspend fun getSources(): SourceResponse
+
+    suspend fun getWeather(): WeatherResponse
 }

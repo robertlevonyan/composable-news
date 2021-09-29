@@ -3,6 +3,7 @@
     <color name="primary">#FFFFFFFF</color>
     <color name="primaryVariant">#FFF1F1F1</color>
     <color name="onPrimary">#FF1A1A1A</color>
+    <color name="onPrimaryVariant">#FF202020</color>
     <color name="secondary">#FFE7A942</color>
     <color name="secondaryVariant">#FFFFEDD1</color>
     <color name="onSecondary">#FF1A1A1A</color>

@@ -2,4 +2,18 @@
     <string name="app_name">Composable News</string>
     <string name="label_breaking">Breaking</string>
     <string name="label_popular">Popular</string>
+    <string name="label_sources">Sources</string>
+    <string name="label_more">More</string>
+    <string name="label_less">Less</string>
+    <string name="label_weather">Weather</string>
+
+    <string name="weather_clear_sky">Clear sky</string>
+    <string name="weather_few_clouds">Few clouds</string>
+    <string name="weather_scattered_clouds">Scattered clouds</string>
+    <string name="weather_broken_clouds">Broken Clouds</string>
+    <string name="weather_shower_rain">Shower rain</string>
+    <string name="weather_rain">Rain</string>
+    <string name="weather_thunderstorm">Thunderstorm</string>
+    <string name="weather_snow">Snow</string>
+    <string name="weather_mist">Mist</string>
 </resources>
