@@ -3,6 +3,8 @@ package com.robertlevonyan.composable.newsapp.ui.screens.news
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -16,68 +18,102 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.google.accompanist.insets.statusBarsPadding
 import com.robertlevonyan.composable.newsapp.R
-import com.robertlevonyan.composable.newsapp.ui.components.GeneralText
-import com.robertlevonyan.composable.newsapp.ui.components.ItemHeadingText
+import com.robertlevonyan.composable.newsapp.data.entity.NewsItem
+import com.robertlevonyan.composable.newsapp.ui.components.*
+import com.robertlevonyan.composable.newsapp.ui.navigation.NAV_NEWS_ITEM
+import com.robertlevonyan.composable.newsapp.ui.navigation.NavigationScreens
 import com.robertlevonyan.composable.newsapp.ui.theme.*
 
 @Composable
-fun NewsScreen(newsViewModel: NewsViewModel = hiltViewModel(), navController: NavController, newsItemTitle: String?) {
-    if (newsItemTitle == null) {
-        navController.navigateUp()
-        return
-    }
-
-    newsViewModel.getSingleNews(newsItemTitle)
-
+fun NewsScreen(
+    newsViewModel: NewsViewModel = hiltViewModel(),
+    navController: NavController,
+    newsItem: NewsItem,
+) {
     Scaffold(
         content = {
             NewsScreenContent(
                 newsViewModel = newsViewModel,
                 navController = navController,
+                currentNews = newsItem,
             )
         }
     )
 }
 
-@OptIn(ExperimentalCoilApi::class)
 @Composable
-fun NewsScreenContent(newsViewModel: NewsViewModel, navController: NavController) {
-    val currentNews by newsViewModel.currentNews.collectAsState()
-    val news = currentNews ?: return
+fun NewsScreenContent(
+    newsViewModel: NewsViewModel,
+    navController: NavController,
+    currentNews: NewsItem,
+) {
+    newsViewModel.getSourceNews(newsItem = currentNews)
+
+    val sourceNews by newsViewModel.sourceNews.collectAsState()
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(state = rememberScrollState())
     ) {
-        Box {
-            Image(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(height = SectionSize),
-                painter = rememberImagePainter(data = news.image),
-                contentScale = ContentScale.Crop,
-                contentDescription = null,
-            )
+        SelectedNews(currentNews = currentNews, navController = navController)
+        SectionHeadingText(text = "${stringResource(id = R.string.label_same_source)} (${currentNews.source.name})")
+        PublisherNews(sourceNews = sourceNews, navController = navController)
+    }
+}
 
-            BackButton(navController = navController)
+@OptIn(ExperimentalCoilApi::class)
+@Composable
+private fun SelectedNews(currentNews: NewsItem, navController: NavController) {
+    Box {
+        Image(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(height = SectionSize),
+            painter = rememberImagePainter(data = currentNews.image),
+            contentScale = ContentScale.Crop,
+            contentDescription = null,
+        )
+
+        BackButton(navController = navController)
+    }
+
+    ItemHeadingText(
+        text = currentNews.title ?: "",
+        textColor = if (isSystemInDarkTheme()) WhitePure else BlackPure,
+    )
+
+    GeneralText(
+        text = currentNews.content ?: "",
+        textColor = if (isSystemInDarkTheme()) White else Black,
+    )
+}
+
+@Composable
+private fun PublisherNews(sourceNews: List<NewsItem>, navController: NavController) {
+    if (sourceNews.isEmpty()) {
+        ShowLoading(sectionHeight = SectionSize)
+    } else {
+        LazyRow(
+            contentPadding = PaddingValues(all = SmallPadding),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(SectionSize),
+        ) {
+            items(items = sourceNews) { newsItem ->
+                PopularNewsItem(newsItem = newsItem) { currentNewsItem ->
+                    navController.currentBackStackEntry?.arguments?.putParcelable(NAV_NEWS_ITEM, currentNewsItem)
+                    navController.navigate(NavigationScreens.NewsScreen.name)
+                }
+            }
         }
-
-        ItemHeadingText(
-            text = news.title ?: "",
-            textColor = if (isSystemInDarkTheme()) WhitePure else BlackPure,
-        )
-
-        GeneralText(
-            text = news.content ?: "",
-            textColor = if (isSystemInDarkTheme()) White else Black,
-        )
     }
 }
 

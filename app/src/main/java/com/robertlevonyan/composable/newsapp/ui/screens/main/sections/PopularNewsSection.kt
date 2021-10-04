@@ -18,6 +18,8 @@ import com.robertlevonyan.composable.newsapp.ui.components.Category
 import com.robertlevonyan.composable.newsapp.ui.components.PopularNewsItem
 import com.robertlevonyan.composable.newsapp.ui.components.SectionHeadingText
 import com.robertlevonyan.composable.newsapp.ui.components.ShowLoading
+import com.robertlevonyan.composable.newsapp.ui.navigation.NAV_NEWS_ITEM
+import com.robertlevonyan.composable.newsapp.ui.navigation.NavigationScreens
 import com.robertlevonyan.composable.newsapp.ui.screens.main.MainViewModel
 import com.robertlevonyan.composable.newsapp.ui.theme.HalfPadding
 import com.robertlevonyan.composable.newsapp.ui.theme.SectionSize
@@ -30,7 +32,6 @@ object PopularNews {
 
         val categories by mainViewModel.categories.collectAsState()
         val popularNews by mainViewModel.popularNews.collectAsState()
-        val sectionHeight = SectionSize
 
         LazyRow(contentPadding = PaddingValues(all = HalfPadding)) {
             items(items = categories) { category ->
@@ -39,16 +40,22 @@ object PopularNews {
         }
 
         if (popularNews.isEmpty()) {
-            ShowLoading(sectionHeight = sectionHeight)
+            ShowLoading(sectionHeight = SectionSize)
         } else {
             LazyRow(
                 contentPadding = PaddingValues(all = SmallPadding),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(sectionHeight),
+                    .height(SectionSize),
             ) {
-                items(items = popularNews) { newsItem ->
-                    PopularNewsItem(newsItem = newsItem)
+                items(
+                    items = popularNews,
+                    key = { it.title ?: "" },
+                ) { newsItem ->
+                    PopularNewsItem(newsItem = newsItem) { currentNewsItem ->
+                        navController.currentBackStackEntry?.arguments?.putParcelable(NAV_NEWS_ITEM, currentNewsItem)
+                        navController.navigate(NavigationScreens.NewsScreen.name)
+                    }
                 }
             }
         }

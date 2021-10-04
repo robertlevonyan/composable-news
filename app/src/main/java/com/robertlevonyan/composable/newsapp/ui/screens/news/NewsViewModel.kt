@@ -12,12 +12,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NewsViewModel @Inject constructor(private val newsUseCase: NewsUseCase) : ViewModel() {
-    private val _currentNews = MutableStateFlow<NewsItem?>(null)
-    val currentNews: StateFlow<NewsItem?> get() = _currentNews
+    private val _sourceNews = MutableStateFlow(emptyList<NewsItem>())
+    val sourceNews: StateFlow<List<NewsItem>> get() = _sourceNews
 
-    fun getSingleNews(title: String) {
+    fun getSourceNews(newsItem: NewsItem) {
         viewModelScope.launch {
-            _currentNews.value = newsUseCase.getSingleNews(title = title)
+            _sourceNews.value = newsUseCase.getSourceNews(newsItem)
         }
     }
 }

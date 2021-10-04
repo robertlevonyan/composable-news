@@ -16,4 +16,5 @@
     <string name="weather_thunderstorm">Thunderstorm</string>
     <string name="weather_snow">Snow</string>
     <string name="weather_mist">Mist</string>
+    <string name="label_same_source">From same publisher</string>
 </resources>

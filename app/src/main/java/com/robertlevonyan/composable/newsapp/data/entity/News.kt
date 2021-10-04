@@ -22,12 +22,20 @@ data class NewsItem(
     val source: NewsSource,
     @SerializedName("published_at")
     val publishedAt: String,
-) : Parcelable
+) : Parcelable {
+    override fun equals(other: Any?): Boolean {
+        return super.equals(other)
+    }
+
+    override fun hashCode(): Int {
+        return super.hashCode()
+    }
+}
 
 @Parcelize
 data class NewsSource(
     @SerializedName("id")
-    val id: String,
+    val id: String?,
     @SerializedName("name")
     val name: String,
 ) : Parcelable

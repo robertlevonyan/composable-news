@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.robertlevonyan.composable.newsapp.data.entity.NewsItem
 import com.robertlevonyan.composable.newsapp.ui.screens.main.MainScreen
 import com.robertlevonyan.composable.newsapp.ui.screens.news.NewsScreen
 import com.robertlevonyan.composable.newsapp.ui.screens.search.SearchScreen
@@ -24,11 +25,13 @@ fun Navigation() {
         composable(route = NavigationScreens.MainScreen.name) {
             MainScreen(navController = navController)
         }
-        composable(route = "${NavigationScreens.NewsScreen.name}/{$NAV_NEWS_ITEM}") { navEntry ->
-            NewsScreen(
-                navController = navController,
-                newsItemTitle = navEntry.arguments?.getString(NAV_NEWS_ITEM),
-            )
+        composable(route = NavigationScreens.NewsScreen.name) {
+            navController.previousBackStackEntry?.arguments?.getParcelable<NewsItem?>(NAV_NEWS_ITEM)?.let { currentNews ->
+                NewsScreen(
+                    navController = navController,
+                    newsItem = currentNews,
+                )
+            }
         }
         composable(route = NavigationScreens.SearchScreen.name) {
             SearchScreen(navController = navController)

@@ -56,7 +56,6 @@ class MainViewModel @Inject constructor(private val newsUseCase: NewsUseCase) : 
         getBreakingNews()
         selectFirstCategory()
         getInitialSources()
-//        getWeather()
     }
 
     private fun getBreakingNews() {
@@ -108,12 +107,4 @@ class MainViewModel @Inject constructor(private val newsUseCase: NewsUseCase) : 
             _areSourcesLoading.value = false
         }
     }
-
-//    private fun getWeather() {
-//        viewModelScope.launch {
-//            newsUseCase.getWeather().collect {
-//                _weather.value = it
-//            }
-//        }
-//    }
 }

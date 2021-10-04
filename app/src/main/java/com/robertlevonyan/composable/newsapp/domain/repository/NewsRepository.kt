@@ -8,6 +8,7 @@ interface NewsRepository {
     suspend fun getNews(
         category: String = "",
         query: String = "",
+        sources: String = "",
         limit: Int,
         offset: Int,
     ): NewsResponse

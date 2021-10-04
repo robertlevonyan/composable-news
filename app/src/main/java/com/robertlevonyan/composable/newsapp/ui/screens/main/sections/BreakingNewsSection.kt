@@ -16,6 +16,7 @@ import com.robertlevonyan.composable.newsapp.R
 import com.robertlevonyan.composable.newsapp.ui.components.BreakingNewsItem
 import com.robertlevonyan.composable.newsapp.ui.components.SectionHeadingText
 import com.robertlevonyan.composable.newsapp.ui.components.ShowLoading
+import com.robertlevonyan.composable.newsapp.ui.navigation.NAV_NEWS_ITEM
 import com.robertlevonyan.composable.newsapp.ui.navigation.NavigationScreens
 import com.robertlevonyan.composable.newsapp.ui.screens.main.MainViewModel
 import com.robertlevonyan.composable.newsapp.ui.theme.SectionSize
@@ -42,7 +43,8 @@ object BreakingNews {
                 modifier = Modifier.height(SectionSize)
             ) { page ->
                 BreakingNewsItem(newsItem = news[page]) { newsItem ->
-                    navController.navigate("${NavigationScreens.NewsScreen.name}/${newsItem.title}")
+                    navController.currentBackStackEntry?.arguments?.putParcelable(NAV_NEWS_ITEM, newsItem)
+                    navController.navigate(NavigationScreens.NewsScreen.name)
                 }
             }
         }

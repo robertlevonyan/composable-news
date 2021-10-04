@@ -44,9 +44,7 @@ fun MainScreen(navController: NavController) {
 @SuppressLint("UnrememberedMutableState")
 @Composable
 fun MainScreenContent(navController: NavController, mainViewModel: MainViewModel = hiltViewModel()) {
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ) {
+    Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
                 .verticalScroll(state = rememberScrollState())

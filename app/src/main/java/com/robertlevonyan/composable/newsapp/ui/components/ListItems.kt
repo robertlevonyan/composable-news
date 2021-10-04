@@ -85,7 +85,10 @@ fun BreakingNewsItem(
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
-fun PopularNewsItem(newsItem: NewsItem) {
+fun PopularNewsItem(
+    newsItem: NewsItem,
+    onNewsItemClick: (NewsItem) -> Unit,
+) {
     val elementWidth = Resources.getSystem().displayMetrics.widthPixels * 2 / 3
     val elementWidthDp = LocalDensity.current.run { elementWidth.toDp() }
 
@@ -102,7 +105,8 @@ fun PopularNewsItem(newsItem: NewsItem) {
         modifier = Modifier
             .padding(all = SmallPadding)
             .width(width = elementWidthDp)
-            .height(height = SectionSize),
+            .height(height = SectionSize)
+            .clickable { onNewsItemClick.invoke(newsItem) },
     ) {
         val (image, title, description) = createRefs()
 
@@ -172,6 +176,6 @@ fun PreviewListItems() {
                 NewsSource("id", "name"),
                 "published_at",
             )
-        )
+        ) {}
     }
 }

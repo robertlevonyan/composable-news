@@ -14,6 +14,7 @@ class NewsRepositoryImpl @Inject constructor(
     override suspend fun getNews(
         category: String,
         query: String,
+        sources: String,
         limit: Int,
         offset: Int,
     ): NewsResponse = apiService.get(
@@ -22,13 +23,17 @@ class NewsRepositoryImpl @Inject constructor(
             "apiKey" to BuildConfig.NEWS_KEY,
             "limit" to limit,
             "offset" to offset,
-            "country" to "us",
         ).apply {
             if (category.isNotEmpty()) {
                 put("category", category)
             }
             if (query.isNotEmpty()) {
                 put("q", query)
+            }
+            if (sources.isNotEmpty()) {
+                put("sources", sources)
+            } else {
+                put("country", "us")
             }
         },
     )
@@ -37,7 +42,6 @@ class NewsRepositoryImpl @Inject constructor(
         url = "https://newsapi.org/v2/top-headlines/sources",
         parameters = mapOf("apiKey" to BuildConfig.NEWS_KEY),
     )
-
 
     override suspend fun getWeather(): WeatherResponse = apiService.get(
         url = "https://api.openweathermap.org/data/2.5/weather",

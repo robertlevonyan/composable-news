@@ -17,26 +17,11 @@ import javax.inject.Inject
 
 class NewsUseCaseImpl @Inject constructor(private val newsRepository: NewsRepository) : NewsUseCase {
     override suspend fun getBreakingNews(): List<NewsItem> = withContext(Dispatchers.IO) {
-        newsRepository.getNews(
-            limit = 15,
-            offset = 0,
-        ).articles
+        newsRepository.getNews(limit = 15, offset = 0).articles
     }
 
     override suspend fun getPopularNews(category: Category): List<NewsItem> = withContext(Dispatchers.IO) {
-        newsRepository.getNews(
-            category = category.name.lowercase(),
-            limit = 15,
-            offset = 0,
-        ).articles
-    }
-
-    override suspend fun getSingleNews(title: String): NewsItem? = withContext(Dispatchers.IO) {
-        newsRepository.getNews(
-            query = title,
-            limit = 1,
-            offset = 0
-        ).articles.firstOrNull()
+        newsRepository.getNews(category = category.name.lowercase(), limit = 15, offset = 0).articles
     }
 
     override suspend fun getSources(): List<SourceItem> = withContext(Dispatchers.IO) {
@@ -44,7 +29,12 @@ class NewsUseCaseImpl @Inject constructor(private val newsRepository: NewsReposi
     }
 
     override suspend fun getInitialSources(): List<SourceItem> = withContext(Dispatchers.IO) {
-        getSources().subList(0, 12)
+        getSources().subList(fromIndex = 0, toIndex = 12)
+    }
+
+    override suspend fun getSourceNews(newsItem: NewsItem): List<NewsItem> = withContext(Dispatchers.IO) {
+        newsRepository.getNews(sources = newsItem.source.id ?: "", limit = 10, offset = 0)
+            .articles.filter { sourceNewsItem -> sourceNewsItem.title != newsItem.title }
     }
 
     override fun getWeather(): Flow<Weather> = flow {
