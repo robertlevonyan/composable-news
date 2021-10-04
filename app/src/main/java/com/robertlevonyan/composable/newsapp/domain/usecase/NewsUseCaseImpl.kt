@@ -37,6 +37,10 @@ class NewsUseCaseImpl @Inject constructor(private val newsRepository: NewsReposi
             .articles.filter { sourceNewsItem -> sourceNewsItem.title != newsItem.title }
     }
 
+    override suspend fun search(input: String): List<NewsItem> = withContext(Dispatchers.IO) {
+        newsRepository.search(input).articles
+    }
+
     override fun getWeather(): Flow<Weather> = flow {
         while (true) {
             delay(timeMillis = 1000L)

@@ -17,5 +17,7 @@ interface NewsUseCase {
 
     suspend fun getSourceNews(newsItem: NewsItem): List<NewsItem>
 
+    suspend fun search(input: String): List<NewsItem>
+
     fun getWeather(): Flow<Weather>
 }

@@ -157,6 +157,75 @@ fun PopularNewsItem(
     }
 }
 
+@OptIn(ExperimentalCoilApi::class)
+@Composable
+fun SearchNewsItem(
+    newsItem: NewsItem,
+    onNewsItemClick: (NewsItem) -> Unit,
+) {
+    val painter = if (newsItem.image == null) {
+        painterResource(id = R.drawable.bg_placeholder)
+    } else {
+        rememberImagePainter(data = newsItem.image) {
+            crossfade(true)
+            placeholder(R.drawable.bg_placeholder)
+        }
+    }
+
+    ConstraintLayout(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .padding(all = HalfPadding)
+            .clickable { onNewsItemClick.invoke(newsItem) },
+    ) {
+        val (image, title, description) = createRefs()
+
+        Image(
+            modifier = Modifier
+                .constrainAs(image) {
+                    width = Dimension.percent(0.4f)
+                    height = Dimension.fillToConstraints
+                    bottom.linkTo(title.top)
+                    bottom.linkTo(parent.bottom)
+                    start.linkTo(parent.start)
+                    top.linkTo(parent.top)
+                },
+            painter = painter,
+            contentScale = ContentScale.Crop,
+            contentDescription = null,
+        )
+        ItemHeadingText(
+            text = newsItem.title ?: "",
+            modifier = Modifier
+                .fillMaxWidth()
+                .constrainAs(title) {
+                    width = Dimension.fillToConstraints
+                    height = Dimension.wrapContent
+                    end.linkTo(parent.end)
+                    start.linkTo(image.end)
+                    top.linkTo(parent.top)
+                },
+            textColor = if (isSystemInDarkTheme()) WhitePure else BlackPure,
+        )
+        GeneralText(
+            text = newsItem.description ?: "",
+            modifier = Modifier
+                .fillMaxWidth()
+                .constrainAs(description) {
+                    width = Dimension.fillToConstraints
+                    height = Dimension.wrapContent
+                    bottom.linkTo(parent.bottom)
+                    end.linkTo(parent.end)
+                    start.linkTo(image.end)
+                    top.linkTo(title.bottom)
+                },
+            maxLines = 3,
+            textColor = if (isSystemInDarkTheme()) White else Black,
+        )
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun PreviewListItems() {
@@ -165,7 +234,7 @@ fun PreviewListItems() {
             .fillMaxSize()
             .background(Color.White)
     ) {
-        PopularNewsItem(
+        SearchNewsItem(
             newsItem = NewsItem(
                 "author",
                 "title",

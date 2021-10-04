@@ -17,4 +17,5 @@
     <string name="weather_snow">Snow</string>
     <string name="weather_mist">Mist</string>
     <string name="label_same_source">From same publisher</string>
+    <string name="hint_search">Search</string>
 </resources>

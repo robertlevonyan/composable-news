@@ -13,6 +13,10 @@ interface NewsRepository {
         offset: Int,
     ): NewsResponse
 
+    suspend fun search(
+        query: String = "",
+    ): NewsResponse
+
     suspend fun getSources(): SourceResponse
 
     suspend fun getWeather(): WeatherResponse

@@ -38,6 +38,14 @@ class NewsRepositoryImpl @Inject constructor(
         },
     )
 
+    override suspend fun search(query: String): NewsResponse = apiService.get(
+        url = "https://newsapi.org/v2/everything",
+        parameters = mapOf(
+            "apiKey" to BuildConfig.NEWS_KEY,
+            "q" to query,
+        ),
+    )
+
     override suspend fun getSources(): SourceResponse = apiService.get(
         url = "https://newsapi.org/v2/top-headlines/sources",
         parameters = mapOf("apiKey" to BuildConfig.NEWS_KEY),
