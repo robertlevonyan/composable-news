@@ -1,11 +1,15 @@
 package com.robertlevonyan.composable.newsapp.domain.usecase
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.robertlevonyan.composable.newsapp.data.entity.Category
 import com.robertlevonyan.composable.newsapp.data.entity.NewsItem
 import com.robertlevonyan.composable.newsapp.data.entity.SourceItem
 import com.robertlevonyan.composable.newsapp.data.entity.weather.Weather
 import com.robertlevonyan.composable.newsapp.data.entity.weather.WeatherInfo
 import com.robertlevonyan.composable.newsapp.data.entity.weather.WeatherResponse
+import com.robertlevonyan.composable.newsapp.domain.datasource.NewsDataSource
 import com.robertlevonyan.composable.newsapp.domain.repository.NewsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -37,9 +41,9 @@ class NewsUseCaseImpl @Inject constructor(private val newsRepository: NewsReposi
             .articles.filter { sourceNewsItem -> sourceNewsItem.title != newsItem.title }
     }
 
-    override suspend fun search(input: String): List<NewsItem> = withContext(Dispatchers.IO) {
-        newsRepository.search(input).articles
-    }
+    override fun search(input: String): Flow<PagingData<NewsItem>> = Pager(PagingConfig(100)) {
+        NewsDataSource(query = input, newsRepository = newsRepository)
+    }.flow
 
     override fun getWeather(): Flow<Weather> = flow {
         while (true) {

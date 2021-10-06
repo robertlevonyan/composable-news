@@ -1,12 +1,10 @@
 package com.robertlevonyan.composable.newsapp.ui.screens.search
 
-import android.content.res.Resources
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -25,6 +23,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.statusBarsPadding
 import com.robertlevonyan.composable.newsapp.R
@@ -52,7 +52,7 @@ private fun SearchScreenContent(
     navController: NavController,
 ) {
     val searchInput: String by searchViewModel.searchInput.collectAsState()
-    val searchResults: List<NewsItem> by searchViewModel.searchResults.collectAsState()
+    val searchResults: LazyPagingItems<NewsItem> = searchViewModel.onSearchInput(searchInput).collectAsLazyPagingItems()
 
     SearchResults(
         searchViewModel = searchViewModel,
@@ -66,7 +66,7 @@ private fun SearchScreenContent(
 private fun SearchResults(
     searchViewModel: SearchViewModel,
     searchInput: String,
-    searchResults: List<NewsItem>,
+    searchResults: LazyPagingItems<NewsItem>,
     navController: NavController,
 ) {
     LazyColumn(
@@ -81,14 +81,16 @@ private fun SearchResults(
                 onSearchInputChange = searchViewModel::onSearchInput,
             )
         }
-        items(items = searchResults) { newsItem ->
-            SearchNewsItem(
-                newsItem = newsItem,
-                onNewsItemClick = { currentNewsItem ->
-                    navController.currentBackStackEntry?.arguments?.putParcelable(NAV_NEWS_ITEM, currentNewsItem)
-                    navController.navigate(NavigationScreens.NewsScreen.name)
-                },
-            )
+        items(count = searchResults.itemCount) { index ->
+            searchResults[index]?.let { newsItem ->
+                SearchNewsItem(
+                    newsItem = newsItem,
+                    onNewsItemClick = { currentNewsItem ->
+                        navController.currentBackStackEntry?.arguments?.putParcelable(NAV_NEWS_ITEM, currentNewsItem)
+                        navController.navigate(NavigationScreens.NewsScreen.name)
+                    },
+                )
+            }
         }
     }
 }

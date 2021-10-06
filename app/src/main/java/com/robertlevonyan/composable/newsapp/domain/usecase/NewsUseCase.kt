@@ -1,5 +1,6 @@
 package com.robertlevonyan.composable.newsapp.domain.usecase
 
+import androidx.paging.PagingData
 import com.robertlevonyan.composable.newsapp.data.entity.Category
 import com.robertlevonyan.composable.newsapp.data.entity.NewsItem
 import com.robertlevonyan.composable.newsapp.data.entity.SourceItem
@@ -17,7 +18,7 @@ interface NewsUseCase {
 
     suspend fun getSourceNews(newsItem: NewsItem): List<NewsItem>
 
-    suspend fun search(input: String): List<NewsItem>
+    fun search(input: String): Flow<PagingData<NewsItem>>
 
     fun getWeather(): Flow<Weather>
 }

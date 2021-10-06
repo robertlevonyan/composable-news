@@ -15,6 +15,7 @@ interface NewsRepository {
 
     suspend fun search(
         query: String = "",
+        page: Int,
     ): NewsResponse
 
     suspend fun getSources(): SourceResponse
