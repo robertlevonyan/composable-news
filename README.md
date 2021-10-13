@@ -1,4 +1,4 @@
-# <img src="https://github.com/robertlevonyan/camerax-demo/blob/master/composable-news/app/src/main/ic_launcher-web.png"  width="50" height="50" /> &nbsp;&nbsp;&nbsp; Composable News
+# <img src="https://github.com/robertlevonyan/composable-news/blob/master/app/src/main/ic_launcher-playstore.png"  width="50" height="50" /> &nbsp;&nbsp;&nbsp; Composable News
 
 |A demo news app created with Jetpack Compose|<img src="https://github.com/robertlevonyan/composable-news/blob/master/media/composablenews.png"  width="450" />|
 |----------------------------------------------------------------------------------------------|-----------|
