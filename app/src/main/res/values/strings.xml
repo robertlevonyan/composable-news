@@ -18,4 +18,5 @@
     <string name="weather_mist">Mist</string>
     <string name="label_same_source">From same publisher</string>
     <string name="hint_search">Search</string>
+    <string name="label_loading_error">Unable to load</string>
 </resources>

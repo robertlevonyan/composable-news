@@ -79,8 +79,8 @@ android {
 
 dependencies {
     implementation(kotlin("stdlib"))
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
     implementation("io.ktor:ktor-client-core:1.6.3")
     implementation("io.ktor:ktor-client-android:1.6.3")
     implementation("io.ktor:ktor-client-gson:1.6.3")
@@ -106,7 +106,7 @@ dependencies {
     implementation("androidx.compose.material:material:1.1.0-alpha05")
     implementation("androidx.compose.ui:ui-tooling:1.1.0-alpha05")
 
-    implementation("io.coil-kt:coil-compose:1.3.2")
+    implementation("io.coil-kt:coil-compose:1.4.0")
 
     implementation("com.airbnb.android:lottie-compose:4.1.0")
     implementation("com.robertlevonyan.compose:materialchip:3.0.0-beta06")

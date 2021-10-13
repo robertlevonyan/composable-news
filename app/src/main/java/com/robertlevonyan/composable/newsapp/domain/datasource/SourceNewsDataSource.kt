@@ -6,13 +6,17 @@ import com.robertlevonyan.composable.newsapp.data.entity.ActionResult
 import com.robertlevonyan.composable.newsapp.data.entity.NewsItem
 import com.robertlevonyan.composable.newsapp.domain.repository.NewsRepository
 
-class NewsDataSource(private val query: String, private val newsRepository: NewsRepository) :
+class SourceNewsDataSource(private val sourceId: String, private val newsRepository: NewsRepository) :
     PagingSource<Int, NewsItem>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, NewsItem> {
         val nextPage = params.key ?: 1
-        if (query.isEmpty()) return LoadResult.Error(IllegalArgumentException("query cannot be empty"))
+        if (sourceId.isEmpty()) return LoadResult.Error(IllegalArgumentException("query cannot be empty"))
 
-        return newsRepository.search(query = query, page = nextPage).let { result ->
+        return newsRepository.getNews(
+            sources = sourceId,
+            limit = 50,
+            offset = nextPage,
+        ).let { result ->
             when (result) {
                 is ActionResult.Success -> LoadResult.Page(
                     data = result.data.articles,
@@ -22,6 +26,8 @@ class NewsDataSource(private val query: String, private val newsRepository: News
                 )
                 is ActionResult.Error -> LoadResult.Error(result.error)
             }
+
+
         }
     }
 

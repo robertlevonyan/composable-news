@@ -57,6 +57,7 @@ fun NewsScreenContent(
     newsViewModel.getSourceNews(newsItem = currentNews)
 
     val sourceNews by newsViewModel.sourceNews.collectAsState()
+    val sourceNewsError by newsViewModel.sourceNewsError.collectAsState()
 
     Column(
         modifier = Modifier
@@ -65,7 +66,7 @@ fun NewsScreenContent(
     ) {
         SelectedNews(currentNews = currentNews, navController = navController)
         SectionHeadingText(text = "${stringResource(id = R.string.label_same_source)} (${currentNews.source.name})")
-        PublisherNews(sourceNews = sourceNews, navController = navController)
+        PublisherNews(sourceNews = sourceNews, sourceNewsError = sourceNewsError, navController = navController)
     }
 }
 
@@ -97,9 +98,19 @@ private fun SelectedNews(currentNews: NewsItem, navController: NavController) {
 }
 
 @Composable
-private fun PublisherNews(sourceNews: List<NewsItem>, navController: NavController) {
-    if (sourceNews.isEmpty()) {
+private fun PublisherNews(
+    sourceNews: List<NewsItem>,
+    sourceNewsError: Boolean,
+    navController: NavController,
+) {
+    if (sourceNews.isEmpty() && !sourceNewsError) {
         ShowLoading(sectionHeight = SectionSize)
+    } else if (sourceNewsError) {
+        LoadErrorPlaceholder(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(SectionSize),
+        )
     } else {
         LazyRow(
             contentPadding = PaddingValues(all = SmallPadding),

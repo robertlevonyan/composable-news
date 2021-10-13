@@ -1,5 +1,6 @@
 package com.robertlevonyan.composable.newsapp.ui.screens.main.sections
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -14,6 +15,7 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.robertlevonyan.composable.newsapp.R
 import com.robertlevonyan.composable.newsapp.ui.components.BreakingNewsItem
+import com.robertlevonyan.composable.newsapp.ui.components.LoadErrorPlaceholder
 import com.robertlevonyan.composable.newsapp.ui.components.SectionHeadingText
 import com.robertlevonyan.composable.newsapp.ui.components.ShowLoading
 import com.robertlevonyan.composable.newsapp.ui.navigation.NAV_NEWS_ITEM
@@ -31,9 +33,16 @@ object BreakingNews {
         )
 
         val news by mainViewModel.breakingNews.collectAsState()
+        val newsError by mainViewModel.breakingNewsError.collectAsState()
 
-        if (news.isEmpty()) {
+        if (news.isEmpty() && !newsError) {
             ShowLoading(sectionHeight = SectionSize)
+        } else if (newsError) {
+            LoadErrorPlaceholder(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(SectionSize),
+            )
         } else {
             val pagerState = rememberSaveable(saver = PagerState.Saver) {
                 PagerState(pageCount = news.size)

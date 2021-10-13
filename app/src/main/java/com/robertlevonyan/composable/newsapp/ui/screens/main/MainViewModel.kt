@@ -2,6 +2,7 @@ package com.robertlevonyan.composable.newsapp.ui.screens.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.robertlevonyan.composable.newsapp.data.entity.ActionResult
 import com.robertlevonyan.composable.newsapp.data.entity.Category
 import com.robertlevonyan.composable.newsapp.data.entity.NewsItem
 import com.robertlevonyan.composable.newsapp.data.entity.SourceItem
@@ -20,11 +21,20 @@ class MainViewModel @Inject constructor(private val newsUseCase: NewsUseCase) : 
     private val _breakingNews = MutableStateFlow(emptyList<NewsItem>())
     val breakingNews: StateFlow<List<NewsItem>> get() = _breakingNews
 
+    private val _breakingNewsError = MutableStateFlow(false)
+    val breakingNewsError: StateFlow<Boolean> get() = _breakingNewsError
+
     private val _popularNews = MutableStateFlow(emptyList<NewsItem>())
     val popularNews: StateFlow<List<NewsItem>> get() = _popularNews
 
+    private val _popularNewsError = MutableStateFlow(false)
+    val popularNewsError: StateFlow<Boolean> get() = _popularNewsError
+
     private val _sources = MutableStateFlow(emptyList<SourceItem>())
     val sources: StateFlow<List<SourceItem>> get() = _sources
+
+    private val _sourcesError = MutableStateFlow(false)
+    val sourcesError: StateFlow<Boolean> get() = _sourcesError
 
     private val _areSourcesLoading = MutableStateFlow(false)
     val areSourcesLoading: StateFlow<Boolean> get() = _areSourcesLoading
@@ -60,7 +70,12 @@ class MainViewModel @Inject constructor(private val newsUseCase: NewsUseCase) : 
 
     private fun getBreakingNews() {
         viewModelScope.launch {
-            _breakingNews.value = newsUseCase.getBreakingNews()
+            newsUseCase.getBreakingNews().let { result ->
+                when (result) {
+                    is ActionResult.Success -> _breakingNews.value = result.data
+                    is ActionResult.Error -> _breakingNewsError.value = true
+                }
+            }
         }
     }
 
@@ -82,7 +97,12 @@ class MainViewModel @Inject constructor(private val newsUseCase: NewsUseCase) : 
 
     private fun getPopularNews(category: Category) {
         viewModelScope.launch {
-            _popularNews.value = newsUseCase.getPopularNews(category = category)
+            newsUseCase.getPopularNews(category = category).let { result ->
+                when (result) {
+                    is ActionResult.Success -> _popularNews.value = result.data
+                    is ActionResult.Error -> _popularNewsError.value = true
+                }
+            }
         }
     }
 
@@ -93,7 +113,12 @@ class MainViewModel @Inject constructor(private val newsUseCase: NewsUseCase) : 
     fun getSources() {
         viewModelScope.launch {
             _areSourcesLoading.value = true
-            _sources.value = newsUseCase.getSources()
+            newsUseCase.getSources().let { result ->
+                when (result) {
+                    is ActionResult.Success -> _sources.value = result.data
+                    is ActionResult.Error -> _sourcesError.value = true
+                }
+            }
             _areAllSources.value = true
             _areSourcesLoading.value = false
         }
@@ -102,7 +127,12 @@ class MainViewModel @Inject constructor(private val newsUseCase: NewsUseCase) : 
     fun getInitialSources() {
         viewModelScope.launch {
             _areSourcesLoading.value = true
-            _sources.value = newsUseCase.getInitialSources()
+            newsUseCase.getInitialSources().let { result ->
+                when (result) {
+                    is ActionResult.Success -> _sources.value = result.data
+                    is ActionResult.Error -> _sourcesError.value = true
+                }
+            }
             _areAllSources.value = false
             _areSourcesLoading.value = false
         }

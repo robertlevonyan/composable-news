@@ -14,10 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.robertlevonyan.composable.newsapp.R
 import com.robertlevonyan.composable.newsapp.data.entity.Category
-import com.robertlevonyan.composable.newsapp.ui.components.Category
-import com.robertlevonyan.composable.newsapp.ui.components.PopularNewsItem
-import com.robertlevonyan.composable.newsapp.ui.components.SectionHeadingText
-import com.robertlevonyan.composable.newsapp.ui.components.ShowLoading
+import com.robertlevonyan.composable.newsapp.ui.components.*
 import com.robertlevonyan.composable.newsapp.ui.navigation.NAV_NEWS_ITEM
 import com.robertlevonyan.composable.newsapp.ui.navigation.NavigationScreens
 import com.robertlevonyan.composable.newsapp.ui.screens.main.MainViewModel
@@ -32,6 +29,7 @@ object PopularNews {
 
         val categories by mainViewModel.categories.collectAsState()
         val popularNews by mainViewModel.popularNews.collectAsState()
+        val popularNewsError by mainViewModel.popularNewsError.collectAsState()
 
         LazyRow(contentPadding = PaddingValues(all = HalfPadding)) {
             items(items = categories) { category ->
@@ -39,8 +37,14 @@ object PopularNews {
             }
         }
 
-        if (popularNews.isEmpty()) {
+        if (popularNews.isEmpty() && !popularNewsError) {
             ShowLoading(sectionHeight = SectionSize)
+        } else if (popularNewsError) {
+            LoadErrorPlaceholder(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(SectionSize),
+            )
         } else {
             LazyRow(
                 contentPadding = PaddingValues(all = SmallPadding),

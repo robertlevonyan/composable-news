@@ -27,6 +27,7 @@ import com.robertlevonyan.chip.compose.MaterialChip
 import com.robertlevonyan.composable.newsapp.R
 import com.robertlevonyan.composable.newsapp.data.entity.SourceItem
 import com.robertlevonyan.composable.newsapp.ui.components.SectionHeadingText
+import com.robertlevonyan.composable.newsapp.ui.navigation.NavigationScreens
 import com.robertlevonyan.composable.newsapp.ui.screens.main.MainViewModel
 import com.robertlevonyan.composable.newsapp.ui.theme.*
 
@@ -55,7 +56,9 @@ object Sources {
                     }
                 )
                 TagsToggle(mainViewModel, areSourcesLoading, title, more)
-                TagsFlexbox(sources, title, tags)
+                TagsFlexbox(sources, title, tags) { sourceItem ->
+                    navController.navigate("${NavigationScreens.SourcesScreen.name}/${sourceItem.id}/${sourceItem.name}")
+                }
             }
         }
     }
@@ -114,7 +117,8 @@ object Sources {
     private fun ConstraintLayoutScope.TagsFlexbox(
         sources: List<SourceItem>,
         title: ConstrainedLayoutReference,
-        tags: ConstrainedLayoutReference
+        tags: ConstrainedLayoutReference,
+        onTagClicked: (SourceItem) -> Unit
     ) {
         AnimatedContent(
             targetState = sources,
@@ -128,9 +132,11 @@ object Sources {
                     top.linkTo(title.bottom)
                 },
         ) { updatedSource ->
-            FlowRow(modifier = Modifier
-                .fillMaxSize()
-                .padding(bottom = HalfPadding)) {
+            FlowRow(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = HalfPadding)
+            ) {
                 updatedSource.forEach { source ->
                     MaterialChip(
                         text = source.name ?: "",
@@ -140,9 +146,7 @@ object Sources {
                         backgroundColor = Color.Transparent,
                         textColor = colorResource(id = R.color.onPrimary),
                         fontFamily = FontFamily(Font(resId = R.font.newsreader_regular)),
-                        onChipClick = {
-
-                        }
+                        onChipClick = { onTagClicked.invoke(source) }
                     )
                 }
             }
