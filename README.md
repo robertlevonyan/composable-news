@@ -8,9 +8,9 @@
 ### UI & libraries used in the project 
 
 #### Screenshots
-|<img src="https://github.com/robertlevonyan/camerax-demo/blob/master/media/c1.jpg" width="250" />|<img src="https://github.com/robertlevonyan/camerax-demo/blob/master/media/c2.jpg" width="250" />|
+|<img src="https://github.com/robertlevonyan/composable-news/blob/master/media/c1.jpg" width="250" />|<img src="https://github.com/robertlevonyan/composable-news/blob/master/media/c2.jpg" width="250" />|
 |-----------------------------------|---------------------------------------------|
-|<img src="https://github.com/robertlevonyan/camerax-demo/blob/master/media/c3.jpg" width="250" />|<img src="https://github.com/robertlevonyan/camerax-demo/blob/master/media/c4.jpg" width="250" />|
+|<img src="https://github.com/robertlevonyan/composable-news/blob/master/media/c3.jpg" width="250" />|<img src="https://github.com/robertlevonyan/composable-news/blob/master/media/c4.jpg" width="250" />|
 
 #### Libraries
 
