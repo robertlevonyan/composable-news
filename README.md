@@ -10,12 +10,12 @@
 >The app is using public News API provided by [newsapi.org](https://newsapi.org/)
 >
 >To make the app work, please sign up to get a news API Key. Then place it in the `local.properties` file with name NEWS_KEY.
->E.g. NEWS_KEY="123ddffaac245e553e6bcd05"
+> E.g. `NEWS_KEY="123ddffaac245e553e6bcd05"`
 >
->For the weather the app is using the <a href="https://openweathermap.org/api" target="_blank">openweathermap.org</a>
+>For the weather the app is using the [openweathermap.org](https://openweathermap.org/api)
 >
 >To see the weather in the app, please sign up to get a weather API Key. Then place it in the `local.properties` file with name WEATHER_KEY.
->E.g. WEATHER_KEY="af1122cf345556v907c8805"  
+> E.g. `WEATHER_KEY="af1122cf345556v907c8805"`
 
 ### UI & libraries used in the project
 
