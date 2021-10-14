@@ -5,12 +5,13 @@
 
 [![API](https://img.shields.io/badge/API-26%2B-yellow.svg?style=flat-square)](https://android-arsenal.com/api?level=26)
 
-### UI & libraries used in the project 
+### UI & libraries used in the project
 
 #### Screenshots
-|<img src="https://github.com/robertlevonyan/composable-news/blob/master/media/c1.jpg" width="250" />|<img src="https://github.com/robertlevonyan/composable-news/blob/master/media/c2.jpg" width="250" />|
+
+|<img src="https://github.com/robertlevonyan/composable-news/blob/master/media/c1.png" width="250" />|<img src="https://github.com/robertlevonyan/composable-news/blob/master/media/c2.png" width="250" />|
 |-----------------------------------|---------------------------------------------|
-|<img src="https://github.com/robertlevonyan/composable-news/blob/master/media/c3.jpg" width="250" />|<img src="https://github.com/robertlevonyan/composable-news/blob/master/media/c4.jpg" width="250" />|
+|<img src="https://github.com/robertlevonyan/composable-news/blob/master/media/c3.png" width="250" />|<img src="https://github.com/robertlevonyan/composable-news/blob/master/media/c4.png" width="250" />|
 
 #### Libraries
 
