@@ -5,6 +5,20 @@
 
 [![API](https://img.shields.io/badge/API-26%2B-yellow.svg?style=flat-square)](https://android-arsenal.com/api?level=26)
 
+```
+NOTE!
+
+The app is using public News API provided by https://newsapi.org/.
+
+To make the app work, please sign up to get a news API Key. Then place it in the `local.properties` file with name NEWS_KEY. 
+E.g. NEWS_KEY="123ddffaac245e553e6bcd05"
+
+For the weather the app is using the https://openweathermap.org/api.
+
+To see the weather in the app, please sign up to get a weather API Key. Then place it in the `local.properties` file with name WEATHER_KEY.
+E.g. WEATHER_KEY="af1122cf345556v907c8805"  
+```
+
 ### UI & libraries used in the project
 
 #### Screenshots
