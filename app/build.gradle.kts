@@ -109,7 +109,7 @@ dependencies {
     implementation("io.coil-kt:coil-compose:1.4.0")
 
     implementation("com.airbnb.android:lottie-compose:4.1.0")
-    implementation("com.robertlevonyan.compose:materialchip:3.0.0-beta06")
+    implementation("com.robertlevonyan.compose:materialchip:3.0.0")
 
     testImplementation("junit:junit:4.13.2")
 

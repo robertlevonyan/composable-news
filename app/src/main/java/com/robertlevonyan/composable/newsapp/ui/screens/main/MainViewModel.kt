@@ -9,10 +9,7 @@ import com.robertlevonyan.composable.newsapp.data.entity.SourceItem
 import com.robertlevonyan.composable.newsapp.data.entity.weather.Weather
 import com.robertlevonyan.composable.newsapp.domain.usecase.NewsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -42,11 +39,13 @@ class MainViewModel @Inject constructor(private val newsUseCase: NewsUseCase) : 
     private val _areAllSources = MutableStateFlow(false)
     val areAllSources: StateFlow<Boolean> get() = _areAllSources
 
-    private val _weather = newsUseCase.getWeather().stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.Eagerly,
-        initialValue = Weather.EMPTY,
-    )
+    private val _weather = newsUseCase.getWeather()
+        .catch { error -> println(error) }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = Weather.EMPTY,
+        )
     val weather: StateFlow<Weather> get() = _weather
 
     private val _categories = MutableStateFlow(

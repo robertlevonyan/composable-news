@@ -3,24 +3,29 @@ package com.robertlevonyan.composable.newsapp.ui.screens.main.sections
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.navigation.NavController
+import com.robertlevonyan.chip.compose.ChipInteraction
+import com.robertlevonyan.chip.compose.MaterialChipGroup
 import com.robertlevonyan.composable.newsapp.R
-import com.robertlevonyan.composable.newsapp.data.entity.Category
-import com.robertlevonyan.composable.newsapp.ui.components.*
+import com.robertlevonyan.composable.newsapp.ui.components.LoadErrorPlaceholder
+import com.robertlevonyan.composable.newsapp.ui.components.PopularNewsItem
+import com.robertlevonyan.composable.newsapp.ui.components.SectionHeadingText
+import com.robertlevonyan.composable.newsapp.ui.components.ShowLoading
 import com.robertlevonyan.composable.newsapp.ui.navigation.NAV_NEWS_ITEM
 import com.robertlevonyan.composable.newsapp.ui.navigation.NavigationScreens
 import com.robertlevonyan.composable.newsapp.ui.screens.main.MainViewModel
-import com.robertlevonyan.composable.newsapp.ui.theme.HalfPadding
-import com.robertlevonyan.composable.newsapp.ui.theme.SectionSize
-import com.robertlevonyan.composable.newsapp.ui.theme.SmallPadding
+import com.robertlevonyan.composable.newsapp.ui.theme.*
 
 object PopularNews {
     @Composable
@@ -31,11 +36,23 @@ object PopularNews {
         val popularNews by mainViewModel.popularNews.collectAsState()
         val popularNewsError by mainViewModel.popularNewsError.collectAsState()
 
-        LazyRow(contentPadding = PaddingValues(all = HalfPadding)) {
-            items(items = categories) { category ->
-                ItemCategory(category, mainViewModel::updateCategories)
-            }
-        }
+        MaterialChipGroup(
+            contentPadding = PaddingValues(all = HalfPadding),
+            items = categories,
+            createTitle = { category -> category.name.replaceFirstChar { it.uppercase() } },
+            strokeColor = Accent,
+            strokeSize = StrokeSize,
+            backgroundColor = Color.Transparent,
+            selectedBackgroundColor = Accent,
+            textColor = colorResource(id = R.color.onSecondary),
+            selectedTextColor = Black,
+            fontFamily = FontFamily(Font(resId = R.font.newsreader_regular)),
+            interaction = ChipInteraction.SelectableWithoutIcon,
+            initialSelectedElementIndex = 0,
+            onItemSelected = { _, category ->
+                mainViewModel.updateCategories(category = category)
+            },
+        )
 
         if (popularNews.isEmpty() && !popularNewsError) {
             ShowLoading(sectionHeight = SectionSize)
@@ -63,18 +80,5 @@ object PopularNews {
                 }
             }
         }
-    }
-
-    @Composable
-    private fun ItemCategory(
-        category: Category,
-        onCategorySelected: (Category) -> Unit,
-    ) {
-        Category(
-            text = category.name.replaceFirstChar { it.uppercase() },
-            modifier = Modifier.padding(all = SmallPadding),
-            selected = category.selected,
-            onCategorySelected = onCategorySelected,
-        )
     }
 }
