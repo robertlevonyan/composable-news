@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,14 +26,17 @@ import com.robertlevonyan.composable.newsapp.R
 import com.robertlevonyan.composable.newsapp.data.entity.SourceItem
 import com.robertlevonyan.composable.newsapp.ui.components.SectionHeadingText
 import com.robertlevonyan.composable.newsapp.ui.navigation.NavigationScreens
-import com.robertlevonyan.composable.newsapp.ui.screens.main.MainViewModel
 import com.robertlevonyan.composable.newsapp.ui.theme.*
 
 object Sources {
     @Composable
-    fun SourcesSection(navController: NavController, mainViewModel: MainViewModel) {
-        val sources by mainViewModel.sources.collectAsState()
-        val areSourcesLoading by mainViewModel.areSourcesLoading.collectAsState()
+    fun SourcesSection(
+        navController: NavController,
+        sources: List<SourceItem>,
+        areSourcesLoading: Boolean,
+        areAllSources: Boolean,
+        toggleSources: (Boolean) -> Unit,
+    ) {
 
         Surface(
             modifier = Modifier
@@ -55,8 +56,18 @@ object Sources {
                         top.linkTo(parent.top)
                     }
                 )
-                TagsToggle(mainViewModel, areSourcesLoading, title, more)
-                TagsFlexbox(sources, title, tags) { sourceItem ->
+                TagsToggle(
+                    areAllSources = areAllSources,
+                    areSourcesLoading = areSourcesLoading,
+                    title = title,
+                    more = more,
+                    toggleSources = toggleSources,
+                )
+                TagsFlexbox(
+                    sources = sources,
+                    title = title,
+                    tags = tags,
+                ) { sourceItem ->
                     navController.navigate("${NavigationScreens.SourcesScreen.name}/${sourceItem.id}/${sourceItem.name}")
                 }
             }
@@ -65,13 +76,12 @@ object Sources {
 
     @Composable
     private fun ConstraintLayoutScope.TagsToggle(
-        mainViewModel: MainViewModel,
+        areAllSources: Boolean,
         areSourcesLoading: Boolean,
         title: ConstrainedLayoutReference,
-        more: ConstrainedLayoutReference
+        more: ConstrainedLayoutReference,
+        toggleSources: (Boolean) -> Unit,
     ) {
-        val areAllSources by mainViewModel.areAllSources.collectAsState()
-
         Row(
             modifier = Modifier
                 .padding(end = FabPadding)
@@ -99,9 +109,7 @@ object Sources {
                     backgroundColor = colorResource(id = R.color.surface),
                     contentColor = colorResource(id = R.color.onPrimary),
                 ),
-                onClick = {
-                    if (areAllSources) mainViewModel.getInitialSources() else mainViewModel.getSources()
-                },
+                onClick = { toggleSources(areAllSources) },
                 elevation = ButtonDefaults.elevation(defaultElevation = 0.dp),
             ) {
                 Text(

@@ -26,8 +26,7 @@ import com.robertlevonyan.composable.newsapp.util.round
 
 object Weather {
     @Composable
-    fun WeatherSection(mainViewModel: MainViewModel) {
-        val weather by mainViewModel.weather.collectAsState()
+    fun WeatherSection(weather: Weather) {
 
         if (weather == Weather.EMPTY) return
 

@@ -3,6 +3,7 @@ package com.robertlevonyan.composable.newsapp.ui.screens.main.sections
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -14,6 +15,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.robertlevonyan.composable.newsapp.R
+import com.robertlevonyan.composable.newsapp.data.entity.NewsItem
 import com.robertlevonyan.composable.newsapp.ui.components.BreakingNewsItem
 import com.robertlevonyan.composable.newsapp.ui.components.LoadErrorPlaceholder
 import com.robertlevonyan.composable.newsapp.ui.components.SectionHeadingText
@@ -26,14 +28,15 @@ import com.robertlevonyan.composable.newsapp.ui.theme.SectionSize
 object BreakingNews {
     @Composable
     @OptIn(ExperimentalPagerApi::class)
-    fun BreakingNewsSection(navController: NavController, mainViewModel: MainViewModel) {
+    fun BreakingNewsSection(
+        navController: NavController,
+        news: List<NewsItem>,
+        newsError: Boolean,
+    ) {
         SectionHeadingText(
             text = stringResource(id = R.string.label_breaking),
             modifier = Modifier.statusBarsPadding(),
         )
-
-        val news by mainViewModel.breakingNews.collectAsState()
-        val newsError by mainViewModel.breakingNewsError.collectAsState()
 
         if (news.isEmpty() && !newsError) {
             ShowLoading(sectionHeight = SectionSize)

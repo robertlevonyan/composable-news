@@ -13,6 +13,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
@@ -43,7 +45,10 @@ fun MainScreen(navController: NavController) {
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
-fun MainScreenContent(navController: NavController, mainViewModel: MainViewModel = hiltViewModel()) {
+fun MainScreenContent(
+    navController: NavController,
+    mainViewModel: MainViewModel = hiltViewModel(),
+) {
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
@@ -51,10 +56,42 @@ fun MainScreenContent(navController: NavController, mainViewModel: MainViewModel
                 .background(colorResource(id = R.color.background))
                 .padding(bottom = LargeBottomPadding),
         ) {
-            BreakingNewsSection(navController = navController, mainViewModel = mainViewModel)
-            PopularNewsSection(navController = navController, mainViewModel = mainViewModel)
-            SourcesSection(navController = navController, mainViewModel = mainViewModel)
-            WeatherSection(mainViewModel = mainViewModel)
+
+            val news by mainViewModel.breakingNews.collectAsState()
+            val newsError by mainViewModel.breakingNewsError.collectAsState()
+            BreakingNewsSection(
+                navController = navController,
+                news = news,
+                newsError = newsError,
+            )
+
+
+            val categories by mainViewModel.categories.collectAsState()
+            val popularNews by mainViewModel.popularNews.collectAsState()
+            val popularNewsError by mainViewModel.popularNewsError.collectAsState()
+            PopularNewsSection(
+                navController = navController,
+                categories = categories,
+                popularNews = popularNews,
+                popularNewsError = popularNewsError,
+                updateCategories = mainViewModel::updateCategories,
+            )
+
+            val sources by mainViewModel.sources.collectAsState()
+            val areSourcesLoading by mainViewModel.areSourcesLoading.collectAsState()
+            val areAllSources by mainViewModel.areAllSources.collectAsState()
+            SourcesSection(
+                navController = navController,
+                sources = sources,
+                areSourcesLoading = areSourcesLoading,
+                areAllSources = areAllSources,
+            ) { all ->
+                if (all) mainViewModel.getInitialSources() else mainViewModel.getSources()
+            }
+
+
+            val weather by mainViewModel.weather.collectAsState()
+            WeatherSection(weather = weather)
         }
 
         FloatingActionButton(

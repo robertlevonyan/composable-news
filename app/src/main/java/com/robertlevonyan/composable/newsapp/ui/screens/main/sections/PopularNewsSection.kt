@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
@@ -18,23 +16,26 @@ import androidx.navigation.NavController
 import com.robertlevonyan.chip.compose.ChipInteraction
 import com.robertlevonyan.chip.compose.MaterialChipGroup
 import com.robertlevonyan.composable.newsapp.R
+import com.robertlevonyan.composable.newsapp.data.entity.Category
+import com.robertlevonyan.composable.newsapp.data.entity.NewsItem
 import com.robertlevonyan.composable.newsapp.ui.components.LoadErrorPlaceholder
 import com.robertlevonyan.composable.newsapp.ui.components.PopularNewsItem
 import com.robertlevonyan.composable.newsapp.ui.components.SectionHeadingText
 import com.robertlevonyan.composable.newsapp.ui.components.ShowLoading
 import com.robertlevonyan.composable.newsapp.ui.navigation.NAV_NEWS_ITEM
 import com.robertlevonyan.composable.newsapp.ui.navigation.NavigationScreens
-import com.robertlevonyan.composable.newsapp.ui.screens.main.MainViewModel
 import com.robertlevonyan.composable.newsapp.ui.theme.*
 
 object PopularNews {
     @Composable
-    fun PopularNewsSection(navController: NavController, mainViewModel: MainViewModel) {
+    fun PopularNewsSection(
+        navController: NavController,
+        categories: List<Category>,
+        popularNews: List<NewsItem>,
+        popularNewsError: Boolean,
+        updateCategories: (Category) -> Unit,
+    ) {
         SectionHeadingText(text = stringResource(id = R.string.label_popular))
-
-        val categories by mainViewModel.categories.collectAsState()
-        val popularNews by mainViewModel.popularNews.collectAsState()
-        val popularNewsError by mainViewModel.popularNewsError.collectAsState()
 
         MaterialChipGroup(
             contentPadding = PaddingValues(all = HalfPadding),
@@ -49,9 +50,7 @@ object PopularNews {
             fontFamily = FontFamily(Font(resId = R.font.newsreader_regular)),
             interaction = ChipInteraction.SelectableWithoutIcon,
             initialSelectedElementIndex = 0,
-            onItemSelected = { _, category ->
-                mainViewModel.updateCategories(category = category)
-            },
+            onItemSelected = { _, category -> updateCategories.invoke(category) },
         )
 
         if (popularNews.isEmpty() && !popularNewsError) {
