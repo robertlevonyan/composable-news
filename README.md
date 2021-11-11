@@ -51,6 +51,10 @@
 - **Facebook**: https://facebook.com/robert.levonyan
 - **Google Play**: https://play.google.com/store/apps/dev?id=5477562049350283357
 
+<a href="https://www.buymeacoffee.com/robertlevonyan">
+  <img src="https://github.com/robertlevonyan/composable-news/blob/master/media/coffee.jpeg"  width="300" />
+</a>
+
 ## Licence
 
 ```
