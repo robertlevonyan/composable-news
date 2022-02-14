@@ -85,8 +85,8 @@ dependencies {
     implementation("io.ktor:ktor-client-android:1.6.3")
     implementation("io.ktor:ktor-client-gson:1.6.3")
 
-    implementation("com.google.accompanist:accompanist-flowlayout:0.18.0")
-    implementation("com.google.accompanist:accompanist-insets:0.18.0")
+    implementation("com.google.accompanist:accompanist-flowlayout:0.23.0")
+    implementation("com.google.accompanist:accompanist-insets:0.23.0")
     implementation("com.google.accompanist:accompanist-pager:0.18.0")
     implementation("com.google.android.material:material:1.6.0-alpha02")
     implementation("com.google.dagger:hilt-android:2.40.5")
