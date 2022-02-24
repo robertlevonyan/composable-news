@@ -56,7 +56,6 @@ fun MainScreenContent(
                 .background(colorResource(id = R.color.background))
                 .padding(bottom = LargeBottomPadding),
         ) {
-
             val news by mainViewModel.breakingNews.collectAsState()
             val newsError by mainViewModel.breakingNewsError.collectAsState()
             BreakingNewsSection(
