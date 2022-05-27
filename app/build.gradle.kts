@@ -94,7 +94,7 @@ dependencies {
 
     implementation("androidx.activity:activity-compose:1.6.0-alpha03")
     implementation("androidx.appcompat:appcompat:1.4.1")
-    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.0")
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.1")
