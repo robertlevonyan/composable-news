@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import coil.annotation.ExperimentalCoilApi
+import coil.compose.AsyncImage
 import coil.compose.rememberImagePainter
 import com.robertlevonyan.composable.newsapp.R
 import com.robertlevonyan.composable.newsapp.data.entity.NewsItem
@@ -35,17 +36,8 @@ fun BreakingNewsItem(
     ) {
         val (background, title, description) = createRefs()
 
-        val painter = if (newsItem.image == null) {
-            painterResource(id = R.drawable.bg_placeholder)
-        } else {
-            rememberImagePainter(data = newsItem.image) {
-                crossfade(true)
-                placeholder(R.drawable.bg_placeholder)
-            }
-        }
 
-        Image(
-            painter = painter,
+        AsyncImage(
             modifier = Modifier
                 .fillMaxSize()
                 .constrainAs(background) {
@@ -55,6 +47,8 @@ fun BreakingNewsItem(
                     top.linkTo(parent.top)
                 },
             contentDescription = null,
+            model = newsItem.image,
+            placeholder = painterResource(id = R.drawable.bg_placeholder),
             contentScale = ContentScale.Crop,
             colorFilter = ColorFilter.tint(
                 color = BlackTransparent,
@@ -83,7 +77,6 @@ fun BreakingNewsItem(
     }
 }
 
-@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun PopularNewsItem(
     newsItem: NewsItem,
@@ -91,15 +84,6 @@ fun PopularNewsItem(
 ) {
     val elementWidth = Resources.getSystem().displayMetrics.widthPixels * 2 / 3
     val elementWidthDp = LocalDensity.current.run { elementWidth.toDp() }
-
-    val painter = if (newsItem.image == null) {
-        painterResource(id = R.drawable.bg_placeholder)
-    } else {
-        rememberImagePainter(data = newsItem.image) {
-            crossfade(true)
-            placeholder(R.drawable.bg_placeholder)
-        }
-    }
 
     ConstraintLayout(
         modifier = Modifier
@@ -110,7 +94,7 @@ fun PopularNewsItem(
     ) {
         val (image, title, description) = createRefs()
 
-        Image(
+        AsyncImage(
             modifier = Modifier
                 .fillMaxSize()
                 .constrainAs(image) {
@@ -121,7 +105,8 @@ fun PopularNewsItem(
                     start.linkTo(parent.start)
                     top.linkTo(parent.top)
                 },
-            painter = painter,
+            model = newsItem.image,
+            placeholder = painterResource(id = R.drawable.bg_placeholder),
             contentScale = ContentScale.Crop,
             contentDescription = null,
         )
@@ -163,15 +148,6 @@ fun SearchNewsItem(
     newsItem: NewsItem,
     onNewsItemClick: (NewsItem) -> Unit,
 ) {
-    val painter = if (newsItem.image == null) {
-        painterResource(id = R.drawable.bg_placeholder)
-    } else {
-        rememberImagePainter(data = newsItem.image) {
-            crossfade(true)
-            placeholder(R.drawable.bg_placeholder)
-        }
-    }
-
     ConstraintLayout(
         modifier = Modifier
             .fillMaxWidth()
@@ -181,7 +157,7 @@ fun SearchNewsItem(
     ) {
         val (image, title, description) = createRefs()
 
-        Image(
+        AsyncImage(
             modifier = Modifier
                 .constrainAs(image) {
                     width = Dimension.percent(0.4f)
@@ -191,7 +167,8 @@ fun SearchNewsItem(
                     start.linkTo(parent.start)
                     top.linkTo(parent.top)
                 },
-            painter = painter,
+            model = newsItem.image,
+            placeholder = painterResource(id = R.drawable.bg_placeholder),
             contentScale = ContentScale.Crop,
             contentDescription = null,
         )
