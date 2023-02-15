@@ -9,12 +9,12 @@ plugins {
 }
 
 android {
-    compileSdk = 32
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "com.robertlevonyan.composable.newsapp"
         minSdk = 26
-        targetSdk = 32
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
@@ -70,7 +70,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.2.0-beta02"
+        kotlinCompilerExtensionVersion = "1.4.0"
     }
     kapt {
         correctErrorTypes = true
@@ -79,41 +79,41 @@ android {
 
 dependencies {
     implementation(kotlin("stdlib"))
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1")
-    implementation("io.ktor:ktor-client-core:2.0.1")
-    implementation("io.ktor:ktor-client-android:1.6.3")
-    implementation("io.ktor:ktor-client-gson:1.6.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+    implementation("io.ktor:ktor-client-core:2.2.3")
+    implementation("io.ktor:ktor-client-android:2.2.3")
+    implementation("io.ktor:ktor-client-gson:2.2.3")
 
     implementation("com.google.accompanist:accompanist-flowlayout:0.23.0")
     implementation("com.google.accompanist:accompanist-insets:0.23.0")
     implementation("com.google.accompanist:accompanist-pager:0.18.0")
-    implementation("com.google.android.material:material:1.7.0-alpha01")
-    implementation("com.google.dagger:hilt-android:2.41")
-    kapt("com.google.dagger:hilt-android-compiler:2.41")
+    implementation("com.google.android.material:material:1.9.0-alpha01")
+    implementation("com.google.dagger:hilt-android:2.45")
+    kapt("com.google.dagger:hilt-android-compiler:2.45")
 
-    implementation("androidx.activity:activity-compose:1.6.0-alpha03")
-    implementation("androidx.appcompat:appcompat:1.4.1")
+    implementation("androidx.activity:activity-compose:1.8.0-alpha01")
+    implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
-    implementation("androidx.core:core-ktx:1.7.0")
+    implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.1")
-    implementation("androidx.navigation:navigation-compose:2.5.0-rc01")
-    implementation("androidx.paging:paging-compose:1.0.0-alpha14")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
+    implementation("androidx.navigation:navigation-compose:2.6.0-alpha05")
+    implementation("androidx.paging:paging-compose:1.0.0-alpha18")
 
-    implementation("androidx.compose.compiler:compiler:1.2.0-beta02")
-    implementation("androidx.compose.ui:ui:1.2.0-beta02")
-    implementation("androidx.compose.material:material:1.2.0-beta02")
-    implementation("androidx.compose.ui:ui-tooling:1.2.0-beta02")
+    implementation("androidx.compose.compiler:compiler:1.4.2")
+    implementation("androidx.compose.ui:ui:1.4.0-beta01")
+    implementation("androidx.compose.material:material:1.4.0-beta01")
+    implementation("androidx.compose.ui:ui-tooling:1.4.0-beta01")
 
-    implementation("io.coil-kt:coil-compose:2.0.0")
+    implementation("io.coil-kt:coil-compose:2.2.2")
 
-    implementation("com.airbnb.android:lottie-compose:4.1.0")
-    implementation("com.robertlevonyan.compose:materialchipg:3.0.4")
+    implementation("com.airbnb.android:lottie-compose:6.0.0")
+    implementation("com.robertlevonyan.compose:materialchip:3.0.5")
 
     testImplementation("junit:junit:4.13.2")
 
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.2.0-beta02")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.4.0-beta01")
 }
