@@ -1,82 +1,90 @@
 package com.robertlevonyan.composable.newsapp.data.entity.weather
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class WeatherResponse(
-    @SerializedName("id")
-    val id: Int,
-    @SerializedName("name")
-    val name: String,
-    @SerializedName("clouds")
-    val clouds: WeatherClouds,
-    @SerializedName("visibility")
-    val visibility: Int,
-    @SerializedName("main")
-    val main: WeatherMain,
-    @SerializedName("weather")
-    val weather: List<WeatherData>,
-    @SerializedName("wind")
-    val wind: Wind?,
-    @SerializedName("rain")
-    val rain: Precipitation?,
-    @SerializedName("snow")
-    val snow: Precipitation?,
-    @SerializedName("sys")
-    val sys: Sys?,
-    @SerializedName("dt")
-    val dt: Long,
+  @SerialName("id")
+  val id: Int,
+  @SerialName("name")
+  val name: String,
+  @SerialName("clouds")
+  val clouds: WeatherClouds,
+  @SerialName("visibility")
+  val visibility: Int,
+  @SerialName("main")
+  val main: WeatherMain,
+  @SerialName("weather")
+  val weather: List<WeatherData>,
+  @SerialName("wind")
+  val wind: Wind?,
+  @SerialName("rain")
+  val rain: Precipitation?,
+  @SerialName("snow")
+  val snow: Precipitation?,
+  @SerialName("sys")
+  val sys: Sys?,
+  @SerialName("dt")
+  val dt: Long,
 )
 
+@Serializable
 data class WeatherClouds(
-    @SerializedName("all")
-    val all: Int,
+  @SerialName("all")
+  val all: Int,
 )
 
+@Serializable
 data class WeatherMain(
-    @SerializedName("temp")
-    val temp: Float,
-    @SerializedName("feels_like")
-    val feelsLike: Float,
-    @SerializedName("temp_min")
-    val tempMin: Float,
-    @SerializedName("temp_max")
-    val tempMax: Float,
-    @SerializedName("pressure")
-    val pressure: Int,
-    @SerializedName("humidity")
-    val humidity: Int,
+  @SerialName("temp")
+  val temp: Float,
+  @SerialName("feels_like")
+  val feelsLike: Float,
+  @SerialName("temp_min")
+  val tempMin: Float,
+  @SerialName("temp_max")
+  val tempMax: Float,
+  @SerialName("pressure")
+  val pressure: Int,
+  @SerialName("humidity")
+  val humidity: Int,
 )
 
+@Serializable
 data class WeatherData(
-    @SerializedName("id")
-    val id: Int,
-    @SerializedName("main")
-    val main: String,
-    @SerializedName("description")
-    val description: String,
-    @SerializedName("icon")
-    val icon: String,
+  @SerialName("id")
+  val id: Int,
+  @SerialName("main")
+  val main: String,
+  @SerialName("description")
+  val description: String,
+  @SerialName("icon")
+  val icon: String,
 )
 
+@Serializable
 data class Wind(
-    @SerializedName("speed")
-    val speed: Float?,
-    @SerializedName("deg")
-    val deg: Int?,
-    @SerializedName("gust")
-    val gust: Int?,
+  @SerialName("speed")
+  val speed: Float?,
+  @SerialName("deg")
+  val deg: Int?,
+  @SerialName("gust")
+  val gust: Int?,
 )
 
+@Serializable
 data class Precipitation(
-    @SerializedName("1h")
-    val oneH: Int?,
-    @SerializedName("3h")
-    val three3: Int?,
+  @SerialName("1h")
+  val oneH: Int?,
+  @SerialName("3h")
+  val three3: Int?,
 )
 
+@Serializable
 data class Sys(
-    @SerializedName("sunrise")
-    val sunrise: Long?,
-    @SerializedName("sunset")
-    val sunset: Long?,
+  @SerialName("sunrise")
+  val sunrise: Long?,
+  @SerialName("sunset")
+  val sunset: Long?,
 )

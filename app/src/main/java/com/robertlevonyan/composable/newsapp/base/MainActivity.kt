@@ -18,7 +18,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         if (DynamicColors.isDynamicColorAvailable()) {
-            DynamicColors.applyIfAvailable(this)
+            DynamicColors.applyToActivityIfAvailable(this)
         }
         setContent {
             ComposableNewsTheme {

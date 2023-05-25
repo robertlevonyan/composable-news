@@ -1,26 +1,28 @@
 package com.robertlevonyan.composable.newsapp.data.entity
 
 import android.os.Parcelable
-import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @Parcelize
+@Serializable
 data class NewsItem(
-    @SerializedName("author")
+    @SerialName("author")
     val author: String?,
-    @SerializedName("title")
+    @SerialName("title")
     val title: String?,
-    @SerializedName("description")
+    @SerialName("description")
     val description: String?,
-    @SerializedName("url")
+    @SerialName("url")
     val url: String,
-    @SerializedName("urlToImage")
+    @SerialName("urlToImage")
     val image: String?,
-    @SerializedName("content")
+    @SerialName("content")
     val content: String?,
-    @SerializedName("source")
+    @SerialName("source")
     val source: NewsSource,
-    @SerializedName("published_at")
+    @SerialName("published_at")
     val publishedAt: String,
 ) : Parcelable {
     override fun equals(other: Any?): Boolean {
@@ -33,18 +35,20 @@ data class NewsItem(
 }
 
 @Parcelize
+@Serializable
 data class NewsSource(
-    @SerializedName("id")
+    @SerialName("id")
     val id: String?,
-    @SerializedName("name")
+    @SerialName("name")
     val name: String,
 ) : Parcelable
 
+@Serializable
 data class NewsResponse(
-    @SerializedName("status")
+    @SerialName("status")
     val status: String,
-    @SerializedName("totalResults")
+    @SerialName("totalResults")
     val totalResults: Int,
-    @SerializedName("articles")
+    @SerialName("articles")
     val articles: List<NewsItem>,
 )

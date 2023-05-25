@@ -22,7 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.annotation.ExperimentalCoilApi
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
 import com.google.accompanist.insets.statusBarsPadding
 import com.robertlevonyan.composable.newsapp.R
 import com.robertlevonyan.composable.newsapp.data.entity.NewsItem
@@ -33,118 +33,128 @@ import com.robertlevonyan.composable.newsapp.ui.theme.*
 
 @Composable
 fun NewsScreen(
-    newsViewModel: NewsViewModel = hiltViewModel(),
-    navController: NavController,
-    newsItem: NewsItem,
+  newsViewModel: NewsViewModel = hiltViewModel(),
+  navController: NavController,
+  newsItem: NewsItem,
 ) {
-    Scaffold(
-        content = {
-            NewsScreenContent(
-                newsViewModel = newsViewModel,
-                navController = navController,
-                currentNews = newsItem,
-            )
-        }
-    )
+  Scaffold(
+    content = {
+      NewsScreenContent(
+        padding = it,
+        newsViewModel = newsViewModel,
+        navController = navController,
+        currentNews = newsItem,
+      )
+    }
+  )
 }
 
 @Composable
 fun NewsScreenContent(
-    newsViewModel: NewsViewModel,
-    navController: NavController,
-    currentNews: NewsItem,
+  padding: PaddingValues,
+  newsViewModel: NewsViewModel,
+  navController: NavController,
+  currentNews: NewsItem,
 ) {
-    newsViewModel.getSourceNews(newsItem = currentNews)
+  newsViewModel.getSourceNews(newsItem = currentNews)
 
-    val sourceNews by newsViewModel.sourceNews.collectAsState()
-    val sourceNewsError by newsViewModel.sourceNewsError.collectAsState()
+  val sourceNews by newsViewModel.sourceNews.collectAsState()
+  val sourceNewsError by newsViewModel.sourceNewsError.collectAsState()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(state = rememberScrollState())
-    ) {
-        SelectedNews(currentNews = currentNews, navController = navController)
-        SectionHeadingText(text = "${stringResource(id = R.string.label_same_source)} (${currentNews.source.name})")
-        PublisherNews(sourceNews = sourceNews, sourceNewsError = sourceNewsError, navController = navController)
-    }
+  Column(
+    modifier = Modifier
+      .padding(padding)
+      .fillMaxSize()
+      .verticalScroll(state = rememberScrollState())
+  ) {
+    SelectedNews(currentNews = currentNews, navController = navController)
+    SectionHeadingText(text = "${stringResource(id = R.string.label_same_source)} (${currentNews.source.name})")
+    PublisherNews(
+      sourceNews = sourceNews,
+      sourceNewsError = sourceNewsError,
+      navController = navController
+    )
+  }
 }
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 private fun SelectedNews(currentNews: NewsItem, navController: NavController) {
-    Box {
-        Image(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(height = SectionSize),
-            painter = rememberImagePainter(data = currentNews.image),
-            contentScale = ContentScale.Crop,
-            contentDescription = null,
-        )
-
-        BackButton(navController = navController)
-    }
-
-    ItemHeadingText(
-        text = currentNews.title ?: "",
-        textColor = if (isSystemInDarkTheme()) WhitePure else BlackPure,
+  Box {
+    Image(
+      modifier = Modifier
+        .fillMaxWidth()
+        .height(height = SectionSize),
+      painter = rememberAsyncImagePainter(model = currentNews.image),
+      contentScale = ContentScale.Crop,
+      contentDescription = null,
     )
 
-    GeneralText(
-        text = currentNews.content ?: "",
-        textColor = if (isSystemInDarkTheme()) White else Black,
-    )
+    BackButton(navController = navController)
+  }
+
+  ItemHeadingText(
+    text = currentNews.title ?: "",
+    textColor = if (isSystemInDarkTheme()) WhitePure else BlackPure,
+  )
+
+  GeneralText(
+    text = currentNews.content ?: "",
+    textColor = if (isSystemInDarkTheme()) White else Black,
+  )
 }
 
 @Composable
 private fun PublisherNews(
-    sourceNews: List<NewsItem>,
-    sourceNewsError: Boolean,
-    navController: NavController,
+  sourceNews: List<NewsItem>,
+  sourceNewsError: Boolean,
+  navController: NavController,
 ) {
-    if (sourceNews.isEmpty() && !sourceNewsError) {
-        ShowLoading(sectionHeight = SectionSize)
-    } else if (sourceNewsError) {
-        LoadErrorPlaceholder(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(SectionSize),
-        )
-    } else {
-        LazyRow(
-            contentPadding = PaddingValues(all = SmallPadding),
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(SectionSize),
-        ) {
-            items(items = sourceNews) { newsItem ->
-                PopularNewsItem(newsItem = newsItem) { currentNewsItem ->
-                    navController.currentBackStackEntry?.arguments?.putParcelable(NAV_NEWS_ITEM, currentNewsItem)
-                    navController.navigate(NavigationScreens.NewsScreen.name)
-                }
-            }
+  if (sourceNews.isEmpty() && !sourceNewsError) {
+    ShowLoading(sectionHeight = SectionSize)
+  } else if (sourceNewsError) {
+    LoadErrorPlaceholder(
+      modifier = Modifier
+        .fillMaxWidth()
+        .height(SectionSize),
+    )
+  } else {
+    LazyRow(
+      contentPadding = PaddingValues(all = SmallPadding),
+      modifier = Modifier
+        .fillMaxWidth()
+        .height(SectionSize),
+    ) {
+      items(items = sourceNews) { newsItem ->
+        PopularNewsItem(newsItem = newsItem) { currentNewsItem ->
+          navController.currentBackStackEntry?.arguments?.putParcelable(
+            NAV_NEWS_ITEM,
+            currentNewsItem
+          )
+          navController.navigate(NavigationScreens.NewsScreen.name)
         }
+      }
     }
+  }
 }
 
 @Composable
 private fun BackButton(navController: NavController) {
-    FloatingActionButton(
-        modifier = Modifier
-            .statusBarsPadding()
-            .padding(all = HalfPadding)
-            .size(size = SmallFabSize),
-        shape = CircleShape,
-        backgroundColor = White,
-        onClick = { navController.navigateUp() },
-    ) {
-        Image(
-            modifier = Modifier.wrapContentSize(),
-            painter = painterResource(id = R.drawable.ic_arrow_back),
-            contentDescription = null,
-            alignment = Alignment.Center,
-            colorFilter = ColorFilter.tint(Black)
-        )
-    }
+  FloatingActionButton(
+    modifier = Modifier
+      .statusBarsPadding()
+      .padding(all = HalfPadding)
+      .size(size = SmallFabSize),
+    shape = CircleShape,
+    backgroundColor = White,
+    onClick = { navController.navigateUp() },
+  ) {
+    Image(
+      modifier = Modifier.wrapContentSize(),
+      painter = painterResource(id = R.drawable.ic_arrow_back),
+      contentDescription = null,
+      alignment = Alignment.Center,
+      colorFilter = ColorFilter.tint(Black)
+    )
+  }
 }

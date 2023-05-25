@@ -12,7 +12,7 @@ class ApiService @Inject constructor(val httpClientWrapper: HttpClientWrapper) {
     ): T = httpClientWrapper.getClient().get(url) {
         parameters.forEach { param -> parameter(param.key, param.value) }
         headers.forEach { head -> header(head.key, head.value) }
-    }
+    } as T
 }
 
 suspend fun <R> makeApiCall(call: suspend () -> R) = try {
