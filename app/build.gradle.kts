@@ -4,7 +4,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
-    kotlin("plugin.serialization") version "1.9.10"
+    kotlin("plugin.serialization") version "1.9.22"
     id("dagger.hilt.android.plugin")
     id("kotlin-parcelize")
 }
@@ -71,7 +71,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.3"
+        kotlinCompilerExtensionVersion = "1.5.10"
     }
     namespace = "com.robertlevonyan.composable.newsapp"
     kapt {
@@ -81,9 +81,9 @@ android {
 
 dependencies {
     implementation(kotlin("stdlib"))
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
-    implementation("io.ktor:ktor-client-core:2.3.5")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0")
+    implementation("io.ktor:ktor-client-core:2.3.8")
     implementation("io.ktor:ktor-client-android:2.3.5")
     implementation("io.ktor:ktor-client-content-negotiation:2.3.5")
     implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.5")
@@ -91,23 +91,23 @@ dependencies {
     implementation("com.google.accompanist:accompanist-flowlayout:0.23.0")
     implementation("com.google.accompanist:accompanist-insets:0.23.0")
     implementation("com.google.accompanist:accompanist-pager:0.18.0")
-    implementation("com.google.android.material:material:1.10.0")
-    implementation("com.google.dagger:hilt-android:2.48")
-    kapt("com.google.dagger:hilt-android-compiler:2.48")
+    implementation("com.google.android.material:material:1.11.0")
+    implementation("com.google.dagger:hilt-android:2.49")
+    kapt("com.google.dagger:hilt-android-compiler:2.49")
 
-    implementation("androidx.activity:activity-compose:1.8.0")
+    implementation("androidx.activity:activity-compose:1.8.2")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
     implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
-    implementation("androidx.navigation:navigation-compose:2.7.4")
-    implementation("androidx.paging:paging-compose:3.3.0-alpha02")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+    implementation("androidx.navigation:navigation-compose:2.7.7")
+    implementation("androidx.paging:paging-compose:3.3.0-alpha03")
 
-    implementation("androidx.compose.compiler:compiler:1.5.3")
-    implementation("androidx.compose.ui:ui:1.6.0-alpha08")
-    implementation("androidx.compose.material:material:1.6.0-alpha08")
-    implementation("androidx.compose.ui:ui-tooling:1.6.0-alpha08")
+    implementation("androidx.compose.compiler:compiler:1.5.10")
+    implementation("androidx.compose.ui:ui:1.6.2")
+    implementation("androidx.compose.material:material:1.6.2")
+    implementation("androidx.compose.ui:ui-tooling:1.6.2")
 
     implementation("io.coil-kt:coil-compose:2.4.0")
 
@@ -118,5 +118,5 @@ dependencies {
 
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.6.0-alpha08")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.6.2")
 }
